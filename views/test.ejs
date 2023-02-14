@@ -1,0 +1,22 @@
+<%- include('templates/header')%>
+<div class="d-flex justify-content-center">
+  <div class="container mt-3 form-signin text-center">
+
+    <form action="login" method="post">
+
+      <div>
+        <div class="container mt-3">
+          <a href="http://localhost:3000/api/bin/stop_server" class="btn tk-form-btn">Stop Script Piton</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="container mt-3">
+          <a href="http://localhost:3000/api/bin/start_server" class="btn tk-form-btn">Start Script Piton</a>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+<%- include('templates/footer')%>

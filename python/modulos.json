@@ -1,0 +1,13 @@
+{
+    "running": false,
+    "modulos": [
+        {
+            "state": false,
+            "name": "estufa"
+        },
+        {
+            "state": false,
+            "name": "horno"
+        }
+    ]
+}
