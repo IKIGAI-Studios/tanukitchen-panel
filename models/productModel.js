@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    categoria: {
+    email: {
         type: String,
         required: true
     },
-    foto: {
+    password: {
         type: String,
         required: false
     },
@@ -22,4 +22,4 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('producto', productSchema);
+module.exports = mongoose.model('user', userSchema);
