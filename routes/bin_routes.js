@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 
 routes.get('/stop_server', (req, res) => {
 
-    let command = spawn('py', ['C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/bin/stop.py']);
+    let command = spawn('python', ['/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/bin/stop.py']);
 
     command.on('exit', (code, signal) => {
         console.log(`child process exited with code ${code} and signal ${signal}`);
@@ -22,7 +22,7 @@ routes.get('/stop_server', (req, res) => {
 
 routes.get('/start_server', (req, res) => {
 
-    let command = spawn('py', ['C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/bin/start.py']);
+    let command = spawn('python', ['/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/bin/start.py']);
 
     command.on('exit', (code, signal) => {
         console.log(`child process started with code ${code} and signal ${signal}`);

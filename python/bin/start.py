@@ -1,10 +1,10 @@
 import json
 
 # Leer el archivo json como escritura
-with open("C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/modulos.json") as modulos_json:
+with open("/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json") as modulos_json:
     data = json.load(modulos_json)
 
-with open("C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/modulos.json", "w") as modulos_json_salida:
+with open("/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json", "w") as modulos_json_salida:
     data["running"] = True
 
     # Escribir el archivo

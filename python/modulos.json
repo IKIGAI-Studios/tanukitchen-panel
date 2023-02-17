@@ -1,13 +1,20 @@
 {
-    "running": false,
+    "running": true, 
     "modulos": [
         {
-            "state": false,
-            "name": "estufa"
+            "state": false, 
+            "name": "temperatura",
+            "value": "0"
+        }, 
+        {
+            "state": false, 
+            "name": "humo",
+            "value": "0"
         },
         {
-            "state": false,
-            "name": "horno"
+            "state": false, 
+            "name": "peso",
+            "value": "0"
         }
     ]
 }

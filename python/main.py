@@ -5,7 +5,7 @@ import json
 data = {}
 
 def updateData():
-    with open("C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/modulos.json") as modulos_json:
+    with open("/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json") as modulos_json:
         global data
         data = json.load(modulos_json)
 
