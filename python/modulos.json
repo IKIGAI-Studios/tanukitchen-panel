@@ -4,17 +4,17 @@
         {
             "state": false, 
             "name": "temperatura",
-            "value": "0"
+            "value": 0
         }, 
         {
             "state": false, 
             "name": "humo",
-            "value": "0"
+            "value": 0
         },
         {
             "state": false, 
             "name": "peso",
-            "value": "0"
+            "value": 0
         }
     ]
 }

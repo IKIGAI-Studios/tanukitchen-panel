@@ -1,5 +1,6 @@
 const routes = require('express').Router();
 const { spawn } = require('child_process');
+const fs = require('fs');
 
 routes.get('/stop_server', (req, res) => {
 
@@ -37,6 +38,12 @@ routes.get('/start_server', (req, res) => {
     });
 
     res.redirect('../../test');
+});
+
+routes.get('/modules', (req, res) => {
+    let rawdata = fs.readFileSync('/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json');
+    let modules = JSON.parse(rawdata);
+    res.json(modules);
 });
 
 module.exports = routes;
