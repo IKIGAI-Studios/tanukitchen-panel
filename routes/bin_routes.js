@@ -41,7 +41,7 @@ routes.get('/start_server', (req, res) => {
 });
 
 routes.get('/modules', (req, res) => {
-    let rawdata = fs.readFileSync('/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json');
+    let rawdata = fs.readFileSync('C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/modulos.json');
     let modules = JSON.parse(rawdata);
     res.json(modules);
 });

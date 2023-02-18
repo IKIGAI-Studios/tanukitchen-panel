@@ -45,16 +45,19 @@
               fetch('http://localhost:3000/api/bin/modules')
               .then((response) => response.json())
                 .then((json) => {
+                  var htmlTags = "";
                   json.modulos.map((module) => {
-                    var htmlTags = '<tr>'+
+                    htmlTags += '<tr>'+
                     '<td>' + module.name + '</td>'+
                     '<td>' + module.value + '</td>'+
-                    '<td>' + module.status + '</td>'+
+                    '<td>' + module.state + '</td>'+
                   '</tr>';
                       
-                  $('#table tbody').replaceWith(htmlTags);
+                  $('#table tbody').html(htmlTags);
                   })
                 });
+              // No preguntes pk lo vi de aqui https://stackoverflow.com/questions/72494154/a-listener-indicated-an-asynchronous-response-by-returning-true-but-the-messag
+              return true;
             }
   
             setInterval('readJson()', 1000);
