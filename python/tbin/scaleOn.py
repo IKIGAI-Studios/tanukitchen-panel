@@ -1,6 +1,6 @@
 from modules.scale import Scale
 from decouple import config
 
-Scale(config('JSON_ROUTE')).turnOff()
+Scale(config('JSON_ROUTE')).turnOn()
 
 print("Bascula encendida")
