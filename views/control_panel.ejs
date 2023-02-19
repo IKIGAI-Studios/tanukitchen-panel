@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanukitchen</title>
+    <%-include('templates/header')%>
+    <%-include('templates/navbar')%>
+    
+<div class="container text-center">
+    <div class="d-flex justify-content-center">
+        <h1 class="tk-text">Panel de control</h1>
+    </div>
+    <div class="row">
+        <!-- COLUMNA ESTUFA -->
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-label">Stove</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src="/img/tkStove.png" class="tk-panel-icon"></img>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-data">Temperature</div>
+            </div>
+                <p class="tk-panel-data">50C°/122°F</p>
+            <div class="d-flex justify-content-center">
+                <div class="form-check form-switch">
+                    <input id="toStove" type="checkbox" class="form-check-input" role="switch">
+                    <label for="toStove" class="tk-text">Turn Off</label>
+               </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA HORNO -->
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-label">Oven</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src="/img/tkOven.png" class="tk-panel-icon"></img>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-data">Temperature</div>
+            </div>
+                <p class="tk-panel-data">69C°/6969°F</p>
+            <div class="d-flex justify-content-center">
+                <div class="form-check form-switch">
+                    <input id="toOven" type="checkbox" class="form-check-input" role="switch">
+                    <label for="toOven" class="tk-text">Turn Off</label>
+               </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA BÁSCULA -->
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-label">Scale</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src="/img/tkScale.png" class="tk-panel-icon"></img>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-data">Weight</div>
+            </div>
+                <p class="tk-panel-data">256 gr</p>
+            <div class="d-flex justify-content-center">
+                <div class="form-check form-switch">
+                    <input id="toScale" type="checkbox" class="form-check-input" role="switch">
+                    <label for="toScale" class="tk-text">Reset</label>
+               </div>
+            </div>
+        </div>
+
+        <div class="w-100"></div>
+        
+        <!-- COLUMNA TANQUE DE GAS -->
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-label">Gas Tank</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src="/img/tkGas.png" class="tk-panel-icon"></img>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-data">Gas percentage left</div>
+            </div>
+                <p class="tk-panel-data">69% Eliminar si es necesario</p>
+            <div class="d-flex justify-content-center mt-3">
+                <div class="form-check form-switch">
+                    <input id="toGas" type="checkbox" class="form-check-input" role="switch">
+                    <label for="toGas" class="tk-text">Close</label>
+               </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA EXTRACTOR -->
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-label">Smoke Extractor</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src="/img/tkExtractor.png" class="tk-panel-icon"></img>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-data">Smoke detected</div>
+            </div>
+                <p class="tk-panel-data">NOT SO MUCH Eliminar si es necesario</p>
+            <div class="d-flex justify-content-center">
+                <div class="form-check form-switch">
+                    <input id="toExtractor" type="checkbox" class="form-check-input" role="switch">
+                    <label for="toExtractor" class="tk-text">Turn Off</label>
+               </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA INCENDIO -->
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="tk-panel-label">Risk of Fire</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <img src="/img/tkFire.png" class="tk-panel-icon"></img>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                <p class="tk-panel-data">Everything seems normal</p>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('templates/footer')%>
+

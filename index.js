@@ -16,7 +16,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 app.use('/', main_routes);
 app.use('/api/bin/', bin_routes);
 app.use('/api/modules/', bd_modules_routes);
-app.use("/img", express.static(path.join(__dirname, 'src/imgs')));
+app.use("/img", express.static(path.join(__dirname, 'src/img')));
 app.use("/fonts", express.static(path.join(__dirname, 'src/fonts')));
 app.set('view engine', 'ejs');
 app.use("/scss", express.static(path.join(__dirname, 'src/assets/scss')));

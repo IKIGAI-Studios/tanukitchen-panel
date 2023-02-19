@@ -16,7 +16,7 @@ $tanukitchen-colors: (
 
 // -- overriding variables --
 $body-bg: $tk-darkblue;
-$font-family-base: url(../../fonts/lexend-deca/LexendDeca-Regular.ttf);
+$font-family-base: url(../../fonts/Manrope.ttf);
 
 // importing stuff
 @import "../../../node_modules/bootstrap/scss/bootstrap";
@@ -32,8 +32,8 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 //  mixins 
 //
 
-@mixin text-lexend{
-    font-family: 'lexend-deca';
+@mixin text-manrope{
+    font-family: 'manrope';
 }
 
 @mixin text-somatic {
@@ -51,13 +51,16 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-text{
-    @include text-lexend();
+    @include text-manrope();@mixin text-lexend{
+        font-family: 'lexend-deca';
+    }
+    
     color: $tk-beige;
 }
 
 .tk-ani-grad{
     --bg-size: 300%;
-    @include text-lexend();
+    @include text-manrope();
     font-weight: bold;
     background: linear-gradient(90deg, $tk-green, $tk-violet, $tk-blue) 0 0 / var(--bg-size) 100%;
     color: transparent;
@@ -67,7 +70,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-link{
-    @include text-lexend();
+    @include text-manrope();
     color: $tk-green;
     font-weight: bold;
     text-decoration: none;
@@ -88,14 +91,14 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-form-label{
-    @include text-lexend(); 
+    @include text-manrope(); 
     color: $tk-beige;
     font-size: 1rem;
     font-weight: normal;
 }
 
 .tk-form-input{
-    @include text-lexend();
+    @include text-manrope();
     margin-bottom: 1rem;
     background-color: $tk-beige;
     border: 3px solid $tk-darkblue;
@@ -123,7 +126,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
     background: $tk-green;
     overflow: hidden;
     transform: translate(0);
-    @include text-lexend();
+    @include text-manrope();
     font-weight: bold;
 }
 
@@ -155,7 +158,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-usr-label{
-    @include text-lexend(); 
+    @include text-manrope(); 
     color: $tk-beige;
     padding-left: 0;
     width: 10rem;
@@ -164,7 +167,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-usr-input{
-    @include text-lexend();
+    @include text-manrope();
     color: $tk-darkblue;
     width: 40%;
     margin-bottom: 3rem;
@@ -220,7 +223,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 
 .tk-showData{
     padding: 1rem;
-    @include text-lexend();
+    @include text-manrope();
     color: $tk-beige;
     background-color: $tk-darkblue;
     margin: 1rem;
@@ -236,7 +239,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 .tk-btn-panel{
     color: $tk-darkblue;
     background: $tk-blue;
-    @include text-lexend();
+    @include text-manrope();
     font-weight: bold;
     padding: .5rem;
     border: none;
@@ -251,7 +254,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-cli{
-    @include text-lexend();
+    @include text-manrope();
     color: $tk-darkblue;
     background-color: $tk-beige;
     border-radius: 2rem;
@@ -274,7 +277,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 thead{
-    @include text-lexend();
+    @include text-manrope();
     color: $tk-violet;
     font-weight: bold;
     border-style: none;
@@ -283,3 +286,42 @@ thead{
 tbody, td, th, table{
     border-style: none !important;
 }
+
+// NEW CONTROL PANEL
+
+.tk-panel-label{
+    @include text-manrope();
+    background-color: $tk-beige;
+    color: $tk-darkblue;
+    font-weight: bolder;
+    font-size: 1rem;
+    width: 75%;
+    border-radius: 0 10px 10px 0;
+    text-align: center;
+    left: calc(100%/2);
+    margin: 4rem 3rem 1rem 3rem;
+    padding: 2px;
+}
+
+.tk-panel-icon{
+    
+}
+
+.tk-panel-data{
+    @include text-manrope();
+    color: $tk-beige;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+#toStove:focus, #toOven:focus, #toGas:focus,
+#toExtractor:focus, #toScale:focus{
+    box-shadow: 5px $tk-violet; 
+}
+
+#toStove:checked, #toOven:checked, #toGas:checked,
+#toExtractor:checked, #toScale:checked{
+    background-color: $tk-green; 
+}
+
