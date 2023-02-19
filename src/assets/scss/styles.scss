@@ -51,11 +51,9 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-text{
-    @include text-manrope();@mixin text-lexend{
-        font-family: 'lexend-deca';
-    }
-    
-    color: $tk-beige;
+    @include text-manrope();
+    text-decoration: none;
+    color: $tk-beige !important; 
 }
 
 .tk-ani-grad{
@@ -303,10 +301,6 @@ tbody, td, th, table{
     padding: 2px;
 }
 
-.tk-panel-icon{
-    
-}
-
 .tk-panel-data{
     @include text-manrope();
     color: $tk-beige;
@@ -325,3 +319,17 @@ tbody, td, th, table{
     background-color: $tk-green; 
 }
 
+
+// USER AVATAR
+
+.tk-nb-avatar{
+    border-radius: 100%;
+    height: 40px;
+    width: auto;
+}
+
+a[aria-current='page']{
+    border-bottom-style: solid;
+    border-color: $tk-green;
+
+}

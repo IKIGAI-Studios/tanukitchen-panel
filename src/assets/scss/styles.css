@@ -11731,7 +11731,8 @@ textarea.form-control-lg {
 }
 .tk-text {
   font-family: "manrope";
-  color: #F2E7D5;
+  text-decoration: none;
+  color: #F2E7D5 !important;
 }
 
 .tk-ani-grad {
@@ -11981,4 +11982,15 @@ tbody, td, th, table {
 #toStove:checked, #toOven:checked, #toGas:checked,
 #toExtractor:checked, #toScale:checked {
   background-color: #06BEB6;
+}
+
+.tk-nb-avatar {
+  border-radius: 100%;
+  height: 40px;
+  width: auto;
+}
+
+a[aria-current=page] {
+  border-bottom-style: solid;
+  border-color: #06BEB6;
 }/*# sourceMappingURL=styles.css.map */
