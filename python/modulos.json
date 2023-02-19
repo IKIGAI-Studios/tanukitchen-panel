@@ -1,1 +1,24 @@
-"{\"63f1c6be10869d6bfb97eb4f\": {\"_id\": {\"$oid\": \"63f1c6be10869d6bfb97eb4f\"}, \"name\": \"extractor\", \"active\": \"false\"}, \"63f1c72010869d6bfb97eb51\": {\"_id\": {\"$oid\": \"63f1c72010869d6bfb97eb51\"}, \"name\": \"smoke_detector\", \"value\": 0.0, \"active\": \"false\"}, \"63f1c73010869d6bfb97eb52\": {\"_id\": {\"$oid\": \"63f1c73010869d6bfb97eb52\"}, \"name\": \"scale\", \"value\": {\"$numberDecimal\": \"0.6546\"}, \"active\": \"false\"}, \"63f1c75b10869d6bfb97eb53\": {\"_id\": {\"$oid\": \"63f1c75b10869d6bfb97eb53\"}, \"name\": \"stove\", \"value\": {\"$numberDecimal\": \"1\"}, \"active\": \"false\"}}"
+{
+    "running": true,
+    "modules": [
+        {
+            "state": false,
+            "name": "Bascula",
+            "value": 0
+        },
+        {
+            "state": true,
+            "name": "Estufa",
+            "value": 169.71480340900573
+        },
+        {
+            "state": true,
+            "name": "Detector de humo",
+            "value": 4.191331224638681
+        },
+        {
+            "state": false,
+            "name": "Extractor"
+        }
+    ]
+}
