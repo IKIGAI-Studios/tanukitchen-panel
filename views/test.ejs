@@ -38,6 +38,13 @@
             <a href="http://localhost:3000/api/bin/start_server" class="btn tk-form-btn">Start Script Piton</a>
           </div>
         </div>
+
+        <div>
+          <div class="container mt-3">
+            <a href="" class="btn tk-form-btn" onclick="">Update Data Base</a>
+          </div>
+        </div> <br>
+
           <script>
             jsonRead = {};
   
@@ -48,12 +55,12 @@
                   var htmlTags = "";
                   json.modulos.map((module) => {
                     htmlTags += '<tr>'+
-                    '<td>' + module.name + '</td>'+
-                    '<td>' + module.value + '</td>'+
-                    '<td>' + module.state + '</td>'+
-                  '</tr>';
-                      
-                  $('#table tbody').html(htmlTags);
+                      '<td>' + module.name + '</td>'+
+                      '<td>' + module.value + '</td>'+
+                      '<td>' + module.state + '</td>'+
+                    '</tr>';
+                        
+                    $('#table tbody').html(htmlTags);                    
                   })
                 });
               // No preguntes pk lo vi de aqui https://stackoverflow.com/questions/72494154/a-listener-indicated-an-asynchronous-response-by-returning-true-but-the-messag

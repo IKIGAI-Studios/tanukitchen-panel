@@ -1,4 +1,7 @@
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Leer el archivo json como escritura
 with open("/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json") as modulos_json:

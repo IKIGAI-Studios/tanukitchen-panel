@@ -5,7 +5,7 @@ const moduleSchema = new mongoose.Schema({
         required: true
     },
     value: {
-        type: String,
+        type: mongoose.Types.Decimal128,
         required: true
     },
     active: {
@@ -14,4 +14,4 @@ const moduleSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('module', moduleSchema);
+module.exports = mongoose.model('modules', moduleSchema);
