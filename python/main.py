@@ -1,23 +1,45 @@
+# coding=utf-8
 import time
-import json
+from decouple import config
 
-# Importar archivo json
-data = {}
+from tbin.modules.tanukitchen import Tanukitchen
+from tbin.modules.scale import Scale
+from tbin.modules.stove import Stove
+from tbin.modules.smoke_detector import SmokeDetector
+from tbin.modules.extractor import Extractor
 
-def updateData():
-    with open("/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json") as modulos_json:
-        global data
-        data = json.load(modulos_json)
+jsonRoute = config('JSON_ROUTE')
+
+tanukitchen = Tanukitchen(jsonRoute)
+scale = Scale(jsonRoute)
+stove = Stove(jsonRoute)
+smoke = SmokeDetector(jsonRoute)
+extractor = Extractor(jsonRoute)
 
 def _process():
     while True:
-        if data["running"]:
+        if tanukitchen.getState():
             print(time.ctime())
-            print(data["modulos"])
-            time.sleep(1)
-        time.sleep(0.2)
-        updateData()
+            # Verificar los modulos que están activos y recopilan datos
+            # Bascula
+            if tanukitchen.getModuleData(0)["state"]:
+                scale.readValue()
+            # Estufa
+            if tanukitchen.getModuleData(1)["state"]:
+                stove.readValue()
+            # # Sensor de humo
+            if tanukitchen.getModuleData(2)["state"]:
+                smoke.readValue()
+            # Extractor
+            if tanukitchen.getModuleData(3)["state"]:
+                extractor.extract()
+            
+            time.sleep(0.1)
+        
+        time.sleep(1)
+
+        tanukitchen.readJson()
 
 def __init__():
-    updateData()
+    tanukitchen.readJson()
     _process()

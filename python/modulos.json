@@ -1,20 +1,24 @@
 {
-    "running": true, 
-    "modulos": [
+    "running": true,
+    "modules": [
         {
-            "state": false, 
-            "name": "temperatura",
-            "value": 0
-        }, 
-        {
-            "state": false, 
-            "name": "humo",
+            "state": false,
+            "name": "Bascula",
             "value": 0
         },
         {
-            "state": false, 
-            "name": "peso",
-            "value": 0
+            "state": true,
+            "name": "Estufa",
+            "value": 169.71480340900573
+        },
+        {
+            "state": true,
+            "name": "Detector de humo",
+            "value": 4.191331224638681
+        },
+        {
+            "state": false,
+            "name": "Extractor"
         }
     ]
 }
