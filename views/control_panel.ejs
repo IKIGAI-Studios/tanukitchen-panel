@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/img/TanukitchenLogo-White.png">
-    <title>Tanukitchen</title>
+    <title>Control Panel</title>
     <%-include('templates/header')%>
     <%-include('templates/navbar')%>
     
@@ -135,5 +135,9 @@
     </div>
 </div>
 
-<%- include('templates/footer')%>
+<script>
+    var items = document.querySelectorAll('.nav-item a');
+    items[0].setAttribute('aria-current', "page");
+</script>
 
+<%- include('templates/footer')%>

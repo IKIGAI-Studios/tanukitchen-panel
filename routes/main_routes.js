@@ -13,5 +13,9 @@ routes.get('/control_panel', (req, res) => {
     res.render('control_panel');
 });
 
+routes.get('/recipes', (req, res) => {
+    res.render('recipes');
+});
+
 
 module.exports = routes;
