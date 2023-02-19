@@ -53,11 +53,19 @@
               .then((response) => response.json())
                 .then((json) => {
                   var htmlTags = "";
-                  json.modulos.map((module) => {
+                  json.modules.map((module) => {
+                    switch (module.name) {
+                      case 'Bascula': linkOff = 'http://localhost:3000/api/bin/stop_scale', linkOn = 'http://localhost:3000/api/bin/start_scale'; break;
+                      case 'Estufa': linkOff = 'http://localhost:3000/api/bin/stop_stove', linkOn = 'http://localhost:3000/api/bin/start_stove'; break;
+                      case 'Detector de humo': linkOff = 'http://localhost:3000/api/bin/stop_smoke', linkOn = 'http://localhost:3000/api/bin/start_smoke'; break;
+                      case 'Extractor': linkOff = 'http://localhost:3000/api/bin/stop_extractor', linkOn = 'http://localhost:3000/api/bin/start_extractor'; break;
+                    }
+                    value = module.value === undefined ? 'No Aplica' : module.value;
                     htmlTags += '<tr>'+
                       '<td>' + module.name + '</td>'+
-                      '<td>' + module.value + '</td>'+
+                      '<td>' + value + '</td>'+
                       '<td>' + module.state + '</td>'+
+                      '<td><a href="' + linkOn + '">Prender</a> / <a href="' + linkOff + '">Apagar</a></td>'+
                     '</tr>';
                         
                     $('#table tbody').html(htmlTags);                    
@@ -75,6 +83,7 @@
                 <th>Nombre</th>
                 <th>Valor</th>
                 <th>Estado</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody></tbody>

@@ -20,4 +20,4 @@ for document in documents:
 
 # Actualizar el archivo JSON
 with open(config("JSON_ROUTE"), 'w') as file:
-    json.dump(json_util.dumps(data), file)
+    json.dump(json_util.dumps(data), file, indent=4)

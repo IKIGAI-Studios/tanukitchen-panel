@@ -2,23 +2,27 @@
     "running": true,
     "modules": [
         {
-            "state": false,
+            "state": true,
             "name": "Bascula",
-            "value": 0
+            "value": 56.80405244637704,
+            "connected": false
         },
         {
             "state": true,
             "name": "Estufa",
-            "value": 169.71480340900573
+            "value": 1.1474713728140573,
+            "connected": false
         },
         {
             "state": true,
             "name": "Detector de humo",
-            "value": 4.191331224638681
+            "value": 0.5581806354329044,
+            "connected": false
         },
         {
             "state": false,
-            "name": "Extractor"
+            "name": "Extractor",
+            "connected": false
         }
     ]
 }

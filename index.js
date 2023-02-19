@@ -6,6 +6,7 @@ const connectMongoDB = require('./connection');
 const main_routes = require('./routes/main_routes');
 const bin_routes = require('./routes/bin_routes');
 const bd_modules_routes = require('./routes/bd_modules_routes');
+const dotenv = require('dotenv');
 
 connectMongoDB();
 
@@ -19,6 +20,7 @@ app.use("/img", express.static(path.join(__dirname, 'src/imgs')));
 app.use("/fonts", express.static(path.join(__dirname, 'src/fonts')));
 app.set('view engine', 'ejs');
 app.use("/scss", express.static(path.join(__dirname, 'src/assets/scss')));
+dotenv.config();
 
 const port = 3000;
 app.listen(port, () => {
