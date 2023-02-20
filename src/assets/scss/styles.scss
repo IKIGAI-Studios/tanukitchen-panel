@@ -296,8 +296,20 @@ tbody, td, th, table{
     width: 75%;
     border-radius: 0 10px 10px 0;
     text-align: center;
-    left: calc(100%/2);
     margin: 4rem 3rem 1rem 3rem;
+    padding: 2px;
+}
+
+.tk-recipes-label{
+    @include text-manrope();
+    width: 100%;
+    background-color: $tk-beige;
+    color: $tk-darkblue;
+    font-weight: bolder;
+    font-size: 1rem;
+    border-radius: 0 10px 10px 0;
+    text-align: center;
+    margin: 4rem 1rem 1rem 1rem;
     padding: 2px;
 }
 
@@ -308,6 +320,12 @@ tbody, td, th, table{
     text-align: center;
 }
 
+.tk-divider{
+    border-style: solid;
+    border-color: $tk-beige;
+    width: 90%;
+    margin: 1rem;
+}
 
 #toStove:focus, #toOven:focus, #toGas:focus,
 #toExtractor:focus, #toScale:focus{
@@ -332,4 +350,9 @@ a[aria-current='page']{
     border-bottom-style: solid;
     border-color: $tk-green;
 
+}
+
+.tk-recipe-type{
+    width: 80%;
+    height: auto;
 }

@@ -11962,8 +11962,20 @@ tbody, td, th, table {
   width: 75%;
   border-radius: 0 10px 10px 0;
   text-align: center;
-  left: 50%;
   margin: 4rem 3rem 1rem 3rem;
+  padding: 2px;
+}
+
+.tk-recipes-label {
+  font-family: "manrope";
+  width: 100%;
+  background-color: #F2E7D5;
+  color: #272f3f;
+  font-weight: bolder;
+  font-size: 1rem;
+  border-radius: 0 10px 10px 0;
+  text-align: center;
+  margin: 4rem 1rem 1rem 1rem;
   padding: 2px;
 }
 
@@ -11972,6 +11984,13 @@ tbody, td, th, table {
   color: #F2E7D5;
   margin-top: 10px;
   text-align: center;
+}
+
+.tk-divider {
+  border-style: solid;
+  border-color: #F2E7D5;
+  width: 90%;
+  margin: 1rem;
 }
 
 #toStove:focus, #toOven:focus, #toGas:focus,
@@ -11993,4 +12012,9 @@ tbody, td, th, table {
 a[aria-current=page] {
   border-bottom-style: solid;
   border-color: #06BEB6;
+}
+
+.tk-recipe-type {
+  width: 80%;
+  height: auto;
 }/*# sourceMappingURL=styles.css.map */
