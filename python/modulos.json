@@ -4,24 +4,35 @@
         {
             "state": true,
             "name": "Bascula",
-            "value": 56.80405244637704,
+            "value": 0,
             "connected": false
         },
         {
             "state": true,
             "name": "Estufa",
-            "value": 1.1474713728140573,
+            "value": 0,
             "connected": false
         },
         {
             "state": true,
             "name": "Detector de humo",
-            "value": 0.5581806354329044,
+            "value": 10,
             "connected": false
         },
         {
             "state": false,
             "name": "Extractor",
+            "connected": false
+        },
+        {
+            "state": true,
+            "name": "Tanque de Gas",
+            "connected": false
+        },
+        {
+            "state": true,
+            "name": "Horno",
+            "value": 55.6548,
             "connected": false
         }
     ]

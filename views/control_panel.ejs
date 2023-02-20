@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/img/TanukitchenLogo-White.png">
+    <link rel="shortcut icon" href="src\img\TanukitchenLogo-White.png">
     <title>Tanukitchen</title>
     <%-include('templates/header')%>
     <%-include('templates/navbar')%>
@@ -26,11 +26,11 @@
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Temperature</div>
             </div>
-                <p class="tk-panel-data">50C°/122°F</p>
+                <p class="tk-panel-data" id="stove_temp">0 C°</p>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
-                    <input id="toStove" type="checkbox" class="form-check-input" role="switch">
-                    <label for="toStove" class="tk-text">Turn Off</label>
+                    <input id="toStove" type="checkbox" class="form-check-input" role="switch"  onclick="state_change('stove', $('#toStove').prop('checked'))">
+                    <label for="toStove" class="tk-text" id="stove_turn">Turn On</label>
                </div>
             </div>
         </div>
@@ -46,11 +46,11 @@
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Temperature</div>
             </div>
-                <p class="tk-panel-data">69C°/6969°F</p>
+                <p class="tk-panel-data" id="oven_temp">69 C°</p>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
-                    <input id="toOven" type="checkbox" class="form-check-input" role="switch">
-                    <label for="toOven" class="tk-text">Turn Off</label>
+                    <input id="toOven" type="checkbox" class="form-check-input" role="switch" onclick="state_change('oven', $('#toOven').prop('checked'))">
+                    <label for="toOven" class="tk-text" id="oven_turn">Turn On</label>
                </div>
             </div>
         </div>
@@ -66,11 +66,11 @@
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Weight</div>
             </div>
-                <p class="tk-panel-data">256 gr</p>
+                <p class="tk-panel-data" id="scale_weight">0 gr</p>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
-                    <input id="toScale" type="checkbox" class="form-check-input" role="switch">
-                    <label for="toScale" class="tk-text">Reset</label>
+                    <input id="toScale" type="checkbox" class="form-check-input" role="switch" onclick="state_change('scale', $('#toScale').prop('checked'))">
+                    <label for="toScale" class="tk-text" id="scale_turn">Turn On</label>
                </div>
             </div>
         </div>
@@ -88,13 +88,12 @@
                 <img src="/img/tkGas.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center">
-                <div class="tk-panel-data">Gas percentage left</div>
+                <div class="tk-panel-data" id="gas_message">Close</div>
             </div>
-                <p class="tk-panel-data">69% Eliminar si es necesario</p>
             <div class="d-flex justify-content-center mt-3">
                 <div class="form-check form-switch">
-                    <input id="toGas" type="checkbox" class="form-check-input" role="switch">
-                    <label for="toGas" class="tk-text">Close</label>
+                    <input id="toGas" type="checkbox" class="form-check-input" role="switch" onclick="state_change('gas', $('#toGas').prop('checked'))">
+                    <label for="toGas" class="tk-text" id="gas_turn">Open</label>
                </div>
             </div>
         </div>
@@ -107,14 +106,13 @@
             <div class="d-flex justify-content-center">
                 <img src="/img/tkExtractor.png" class="tk-panel-icon"></img>
             </div>
-            <div class="d-flex justify-content-center">
-                <div class="tk-panel-data">Smoke detected</div>
+            <div class="d-flex justify-content-center mt-2">
+                <div class="tk-panel-data" id="smoke_message">Off</div>
             </div>
-                <p class="tk-panel-data">NOT SO MUCH Eliminar si es necesario</p>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-3">
                 <div class="form-check form-switch">
-                    <input id="toExtractor" type="checkbox" class="form-check-input" role="switch">
-                    <label for="toExtractor" class="tk-text">Turn Off</label>
+                    <input id="toSmoke" type="checkbox" class="form-check-input" role="switch" onclick="state_change('extractor', $('#toSmoke').prop('checked'))">
+                    <label for="toSmoke" class="tk-text" id="smoke_turn">Turn On</label>
                </div>
             </div>
         </div>
@@ -128,12 +126,61 @@
                 <img src="/img/tkFire.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center mt-2">
-                <p class="tk-panel-data">Everything seems normal</p>
+                <p class="tk-panel-data" id="fire_message">Everything seems normal</p>
             </div>
+                <p class="tk-panel-data" id="fire_percent">0 %</p>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    jsonRead = {};
+
+    function readJson() {
+      fetch('http://localhost:3000/api/bin/modules')
+      .then((response) => response.json())
+        .then((json) => {
+            $('#toScale').prop('checked', json.modules[0].state);
+            $('#scale_turn').html(json.modules[0].state ? 'Turn Off' : 'Turn On');
+            $('#scale_weight').html(json.modules[0].value + ' gr');
+
+            $('#toStove').prop('checked', json.modules[1].state);
+            $('#stove_turn').html(json.modules[1].state ? 'Turn Off' : 'Turn On');
+            $('#stove_temp').html(json.modules[1].value + ' C°');
+            
+            msj = 'Everything seems normal';
+            if (json.modules[2].value >= 30 && json.modules[2].value <= 60) {
+                msj = 'Warning, please open all windows';
+            } else if (json.modules[2].value >= 60) {
+                msj = 'Alert, FIRE';
+            }
+            $('#fire_percent').html(json.modules[2].value + ' %');
+            $('#fire_message').html(msj);
+            
+            $('#toSmoke').prop('checked', json.modules[3].state);
+            $('#smoke_turn').html(json.modules[3].state ? 'Turn Off' : 'Turn On');
+            $('#smoke_message').html(json.modules[3].state ? 'On' : 'Off');
+
+            $('#toGas').prop('checked', json.modules[4].state);
+            $('#gas_turn').html(json.modules[4].state ? 'Close' : 'Open');
+            $('#gas_message').html(json.modules[4].state ? 'Open' : 'Close');
+
+            $('#toOven').prop('checked', json.modules[5].state);
+            $('#oven_turn').html(json.modules[5].state ? 'Turn Off' : 'Turn On');
+            $('#oven_temp').html(json.modules[5].value + ' C°');
+        });
+    }
+
+    setInterval('readJson()', 1000);
+
+    function state_change(module, state) {
+        url = 'http://localhost:3000/api/bin/';
+        state ? url += 'start' : url += 'stop';
+        url += '_' + module;
+        fetch(url);
+    }
+  </script>
 
 <%- include('templates/footer')%>
 

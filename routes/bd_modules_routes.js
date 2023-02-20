@@ -7,19 +7,6 @@ const Module = require('../models/moduleModel');
 routes.get('/getValue/:name', async(req, res) => {
     try {
         res.json(await Module.find({name:req.params.name}));
-        let command = spawn('python', ['/Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/bin/stop.py']);
-
-        command.on('exit', (code, signal) => {
-            console.log(`child process exited with code ${code} and signal ${signal}`);
-        });
-
-        command.stdout.on('data', (data) => {
-            console.log(`child stdout:\n${data}`);
-        });
-
-        command.stderr.on('data', (data) => {
-            console.error(`child stderr:\n${data}`);
-        });
 
         res.redirect('../../test');
     } catch (e) {

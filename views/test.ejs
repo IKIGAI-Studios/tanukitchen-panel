@@ -27,6 +27,7 @@
               fetch('http://localhost:3000/api/bin/modules')
               .then((response) => response.json())
                 .then((json) => {
+                  console.info(json.modules[0])
                   var htmlTags = "";
                   json.modules.map((module) => {
                     switch (module.name) {
