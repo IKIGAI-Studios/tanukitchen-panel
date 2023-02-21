@@ -37,5 +37,9 @@ routes.post('/control_panel/', async (req, res) => {
     //res.render('control_panel', rslt);
 });
 
+routes.get('/recipes', (req, res) => {
+    res.render('recipes');
+});
+
 
 module.exports = routes;
