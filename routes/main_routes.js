@@ -27,18 +27,20 @@ routes.get('/test', (req, res) => {
 
 routes.get('/control_panel/:user', async (req, res) => {
     let rslt = await User.find({user:req.params.user, active: true});
-    obj = {name: rslt[0]['name']}
+    obj = {user: rslt[0]['user'], name: rslt[0]['name']}
     res.render('control_panel', obj);
 });
 
-routes.post('/control_panel/', async (req, res) => {
+routes.post('/control_panel', async (req, res) => {
     res.json(req.body.user);
     //let rslt = await User.find({user:req.body.user, active: true});
     //res.render('control_panel', rslt);
 });
 
-routes.get('/recipes', (req, res) => {
-    res.render('recipes');
+routes.get('/recipes/:user', async(req, res) => {
+    let rslt = await User.find({user:req.params.user, active: true});
+    obj = {user: rslt[0]['user'], name: rslt[0]['name']}
+    res.render('recipes', obj);
 });
 
 

@@ -192,8 +192,8 @@ routes.get('/start_stove', (req, res) => {
     res.redirect('../../test');
 });
 
-routes.get('/modules', (req, res) => {
-    let rawdata = fs.readFileSync('C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/modulos.json');
+routes.get('/modules', async (req, res) => {
+    let rawdata = await fs.readFileSync(process.env.JSON_ROUTE);
     let modules = JSON.parse(rawdata);
     res.json(modules);
 });

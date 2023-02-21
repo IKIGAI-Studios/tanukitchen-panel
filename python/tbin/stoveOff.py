@@ -3,4 +3,4 @@ from decouple import config
 
 Stove(config('JSON_ROUTE')).turnOff()
 
-print("Estufa encendida")
+print("Estufa apagada")

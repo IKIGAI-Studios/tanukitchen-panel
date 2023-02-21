@@ -46,7 +46,7 @@
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Temperature</div>
             </div>
-                <p class="tk-panel-data" id="oven_temp">69 C°</p>
+                <p class="tk-panel-data" id="oven_temp">0 C°</p>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
                     <input id="toOven" type="checkbox" class="form-check-input" role="switch" onclick="state_change('oven', $('#toOven').prop('checked'))">
@@ -172,7 +172,7 @@
         });
     }
 
-    setInterval('readJson()', 1000);
+    setInterval('readJson()', 2000);
 
     function state_change(module, state) {
         url = 'http://localhost:3000/api/bin/';

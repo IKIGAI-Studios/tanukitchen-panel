@@ -12,4 +12,3 @@ class Stove(Module):
 
         self.readJson()
         self.writeJson("value", self.value)
-    

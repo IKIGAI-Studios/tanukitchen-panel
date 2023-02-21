@@ -14,7 +14,7 @@ class SmokeDetector(Module):
         # if (self.data['modules'][self.position]['connected']):
         #     self.value = GPIO.input(16)
         # else :
-        self.value = random.random() * 10
+        self.value = random.random() * 100
 
         self.writeJson("value", self.value)
     
