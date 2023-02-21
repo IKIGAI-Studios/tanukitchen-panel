@@ -1,212 +1,101 @@
 const routes = require('express').Router();
 const { spawn } = require('child_process');
 const fs = require('fs');
+const Module = require('../models/moduleModel');
 
-routes.get('/stop_server', (req, res) => {
-    console.log(process.env.PYTHON_TBIN);
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/stop.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`child process exited with code ${code} and signal ${signal}`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/stop_server', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "tanukitchen"}, {active: false});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/start_server', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/start.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`child process started with code ${code} and signal ${signal}`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/start_server', async (req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "tanukitchen"}, {active: true});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/stop_extractor', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/extractorOff.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Extractor Off`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/stop_extractor', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "extractor"}, {active: false});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/start_extractor', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/extractorOn.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Extractor On`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/start_extractor', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "extractor"}, {active: true});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/stop_scale', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/scaleOff.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Scale Off`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/stop_scale', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "scale"}, {active: false});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+   }
 });
 
-routes.get('/start_scale', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/scaleOn.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Scale On`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/start_scale', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "scale"}, {active: true});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/stop_smoke', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/smokeOff.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Smoke Off`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/stop_smoke', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "smoke_detector"}, {active: false});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/start_smoke', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/smokeOn.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Smoke On`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/start_smoke', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "smoke_detector"}, {active: true});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/stop_stove', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/stoveOff.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Stove Off`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/stop_stove', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "stove"}, {active: false});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-routes.get('/start_stove', (req, res) => {
-
-    let command = spawn('python', [process.env.PYTHON_TBIN + '/stoveOn.py']);
-
-    command.on('exit', (code, signal) => {
-        console.log(`Stove On`);
-    });
-
-    command.stdout.on('data', (data) => {
-        console.log(`child stdout:\n${data}`);
-    });
-
-    command.stderr.on('data', (data) => {
-        console.error(`child stderr:\n${data}`);
-    });
-
-    res.redirect('../../test');
+routes.get('/start_stove', async(req, res) => {
+    try {
+        await Module.findOneAndUpdate({name: "stove"}, {active: true});
+        res.json(true)
+    } catch (e) {
+        res.json(`Error: ${e}`)
+    }
 });
 
-<<<<<<< Updated upstream
-routes.get('/modules', (req, res) => {
-    let rawdata = fs.readFileSync('C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/modulos.json');
-    let modules = JSON.parse(rawdata);
-=======
 routes.get('/modules', async (req, res) => {
     let rawdata = fs.readFileSync(process.env.JSON_ROUTE);
     let modules = await JSON.parse(rawdata);
-    res.json(modules);
-});
-
-routes.get('/modulesBD', async (req, res) => {
-    let rawdata = fs.readFileSync(process.env.JSON_ROUTE);
-    let modules = await JSON.parse(rawdata);
->>>>>>> Stashed changes
     res.json(modules);
 });
 
