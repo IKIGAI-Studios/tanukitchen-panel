@@ -4,6 +4,14 @@ const { json } = require('express');
 const fs = require('fs');
 const Module = require('../models/moduleModel');
 
+routes.get('/getModules/', async(req, res) => {
+    try {
+        res.json(await Module.find());
+    } catch (e) {
+        console.error(`Error: ${e}`);
+    }
+});
+
 routes.get('/getValue/:name', async(req, res) => {
     try {
         res.json(await Module.find({name:req.params.name}));
