@@ -192,9 +192,21 @@ routes.get('/start_stove', (req, res) => {
     res.redirect('../../test');
 });
 
+<<<<<<< Updated upstream
 routes.get('/modules', (req, res) => {
     let rawdata = fs.readFileSync('C:/Users/erick/Documents/GitHub/tanukitchen-panel/python/modulos.json');
     let modules = JSON.parse(rawdata);
+=======
+routes.get('/modules', async (req, res) => {
+    let rawdata = fs.readFileSync(process.env.JSON_ROUTE);
+    let modules = await JSON.parse(rawdata);
+    res.json(modules);
+});
+
+routes.get('/modulesBD', async (req, res) => {
+    let rawdata = fs.readFileSync(process.env.JSON_ROUTE);
+    let modules = await JSON.parse(rawdata);
+>>>>>>> Stashed changes
     res.json(modules);
 });
 

@@ -11,4 +11,5 @@ class Extractor(Module):
     def turnOff(self):
         self.readJson()
         self.writeJson("state", False)
+
     
