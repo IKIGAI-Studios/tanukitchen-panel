@@ -214,8 +214,8 @@
       fetch('http://localhost:3000/api/modules/getModules')
       .then((response) => response.json())
         .then((json) => {
-            console.log(json)
             json.map((module) => {
+                console.log(module)
                 switch (module.name) {
                     case 'extractor': 
                             $('#toSmoke').prop('checked', module.active);
@@ -224,33 +224,36 @@
                         break;
                     case 'smoke_detector': 
                             msj = 'Everything seems normal';
-                            if (module.value.$numberDecimal >= 30 && module.value.$numberDecimal <= 60) {
+                            if (module.values[0].value >= 30 && module.values[0].value <= 60) {
                                 msj = 'Warning, please open all windows';
-                            } else if (module.value.$numberDecimal >= 60) {
+                            } else if (module.values[0].value >= 60) {
                                 msj = 'Alert, FIRE';
                             }
-                            $('#fire_percent').html(module.value.$numberDecimal + ' %');
+                            $('#fire_percent').html(module.values[0].value + ' %');
                             $('#fire_message').html(msj);
                         break;
                     case 'scale': 
                             $('#toScale').prop('checked', module.active);
                             $('#scale_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                            $('#scale_weight').html(module.value.$numberDecimal + ' gr');
+                            $('#scale_weight').html(module.values[0].value + ' gr');
                         break;
                     case 'stove': 
                             $('#toStove').prop('checked', module.active);
                             $('#stove_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                            $('#stove_temp').html(module.value.$numberDecimal + ' C°');
+                            $('#stove_temp').html(module.values[0].value + ' C°');
                         break;
                     case 'oven': 
                             $('#toOven').prop('checked', module.active);
                             $('#oven_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                            $('#oven_temp').html(module.value.$numberDecimal + ' C°');
+                            $('#oven_temp').html(module.values[0].value + ' C°');
                             break;
                     case 'gas': 
                             $('#toGas').prop('checked', module.active);
                             $('#gas_turn').html(module.active ? 'Close' : 'Open');
                             $('#gas_message').html(module.active ? 'Open' : 'Close');
+                        break;
+                    case 'test': 
+                            // console.log(module.values[0].value)
                         break;
                 }
             });
