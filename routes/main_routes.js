@@ -10,9 +10,11 @@ routes.get('/login', (req, res) => {
 
 routes.post('/login', async (req, res) => {
     try {
-        let rslt = await Kitchen.find({name:req.body.username, active: true});
-        if(rslt.length != 0) {
-            if(rslt[0]['password'] == req.body.password) res.redirect('/control_panel/'+rslt[0]['name']); /*$.redirect("/control_panel", {user: rslt[0]['user']}, "POST");*/
+        let kitchen = await Kitchen.find({name:req.body.username, active: true});
+        let usr = await User.find({id_kitchen:kitchen[0]._id, active: true});
+        obj = {"user": usr, "kitchen": kitchen[0]};
+        if(kitchen.length != 0) {
+            if(kitchen[0]['password'] == req.body.password) res.render('selectUsr', obj); /*res.redirect('/control_panel/'+rslt[0]['name']); /*$.redirect("/control_panel", {user: rslt[0]['user']}, "POST");*/
             else {
                 code = {msj: "Password invalid"};
                 res.render('login', code);
@@ -44,10 +46,10 @@ routes.get('/test', (req, res) => {
     res.render('test');
 });
 
-routes.get('/control_panel/:name', async (req, res) => {
+routes.get('/control_panel/:user', async (req, res) => {
     try {
-        let kitchen = await Kitchen.find({name:req.params.name, active: true});
-        let usr = await User.find({id_kitchen:kitchen[0]._id, active: true});
+        let usr = await User.find({user:req.params.user, active: true});
+        let kitchen = await Kitchen.find({id:usr.id_kitchen, active: true});
         obj = {"user": usr[0], "kitchen": kitchen[0]};
         res.render('control_panel', obj);
     } catch (e) {
@@ -56,10 +58,10 @@ routes.get('/control_panel/:name', async (req, res) => {
     }
 });
 
-routes.get('/recipes/:name', async(req, res) => {
+routes.get('/recipes/:user', async(req, res) => {
     try {
-        let kitchen = await Kitchen.find({name:req.params.name, active: true});
-        let usr = await User.find({id_kitchen:kitchen[0]._id, active: true});
+        let usr = await User.find({user:req.params.user, active: true});
+        let kitchen = await Kitchen.find({id:usr.id_kitchen, active: true});
         obj = {"user": usr[0], "kitchen": kitchen[0]};
         res.render('recipes', obj);
     } catch (e) {
