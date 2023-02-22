@@ -1,38 +1,48 @@
 # coding=utf-8
-import json
+import tbin.modules.bd.action_db as tanukitchenDB
+from bson.objectid import ObjectId
 
 class Tanukitchen:
     
-    def __init__(self, jRoute):
-        self.jRoute = jRoute
-        self.data = {}
-    
+    def __init__(self, id):
+        self.id = id
+
+        self.name = ""
+        self.active = True
+        self.dataModules = {}
+
     def turnOn(self):
-        self.readJson()
-        self.setState(True)
+        self.updateKitchenValue("active", True)
     
     def turnOff(self):
-        self.readJson()
-        self.setState(False)
-    
-    def setState(self, val):
-        with open(self.jRoute, "w") as modulos_json_salida:
-            self.data["running"] = val
-            # Escribir el archivo
-            json.dump(self.data, modulos_json_salida, indent=4)
-    
-    def getState(self):
-        self.readJson()
-        return self.data["running"]
+        self.updateKitchenValue("active", False)
     
     def getData(self):
-        return self.data
+        data = tanukitchenDB.getDocumentById(
+            "kitchens",
+            {
+                "_id": ObjectId(self.id)
+            }
+        )
+        self.name = data["name"]
+        self.active = data["active"]
     
-    def getModuleData(self, module):
-        return self.data["modules"][module]
+    def updateKitchenValue(self, key, value):
+        tanukitchenDB.update(
+            "kitchens",
+            {
+                "_id": ObjectId(self.id)
+            },
+            {
+                key: value
+            }
+        )
     
-    def readJson(self):
-        with open(self.jRoute) as modulos_json:
-            self.data = json.load(modulos_json)
-    
+    def getKitchenData(self):
+        self.dataModules = tanukitchenDB.getDocuments(
+            "modules",
+            {
+                "id_kitchen": ObjectId(self.id)
+            }
+        )
     

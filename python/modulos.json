@@ -9,12 +9,12 @@
         {
             "state": true,
             "name": "Estufa",
-            "value": 169.71480340900573
+            "value": 150.57737479419643
         },
         {
-            "state": true,
+            "state": false,
             "name": "Detector de humo",
-            "value": 4.191331224638681
+            "value": 0
         },
         {
             "state": false,

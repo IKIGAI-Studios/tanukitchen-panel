@@ -6,6 +6,7 @@
 
 from pymongo import MongoClient
 from decouple import config
+
 def get_database():
  
    # Provide the mongodb atlas url to connect python to mongodb using pymongo

@@ -1,15 +1,18 @@
 import random
+import time
 
 from .module import Module
 
 class Stove(Module):
     
-    def __init__(self, jRoute):
-        super().__init__(jRoute, 1)
+    def __init__(self, id):
+        super().__init__(id)
     
     def readValue(self):
-        self.value = random.random() * 200
+        if self.active:
+            self.value = random.random() * 200
+        else:
+            self.value = 0
 
-        self.readJson()
-        self.writeJson("value", self.value)
+        self.insertValue("values", self.value)
     

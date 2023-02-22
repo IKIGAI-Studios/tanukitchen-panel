@@ -8,38 +8,46 @@ from tbin.modules.stove import Stove
 from tbin.modules.smoke_detector import SmokeDetector
 from tbin.modules.extractor import Extractor
 
-jsonRoute = config('JSON_ROUTE')
+tanukitchen = Tanukitchen(config("TANUKITCHEN_ID"))
 
-tanukitchen = Tanukitchen(jsonRoute)
-scale = Scale(jsonRoute)
-stove = Stove(jsonRoute)
-smoke = SmokeDetector(jsonRoute)
-extractor = Extractor(jsonRoute)
+scale = object()
+stove = object()
+smoke = object()
+extractor= object()
 
 def _process():
     while True:
-        if tanukitchen.getState():
-            print(time.ctime())
-            # Verificar los modulos que están activos y recopilan datos
-            # Bascula
-            if tanukitchen.getModuleData(0)["state"]:
-                scale.readValue()
-            # Estufa
-            if tanukitchen.getModuleData(1)["state"]:
-                stove.readValue()
-            # # Sensor de humo
-            if tanukitchen.getModuleData(2)["state"]:
-                smoke.readValue()
-            # Extractor
-            if tanukitchen.getModuleData(3)["state"]:
-                extractor.extract()
-            
-            time.sleep(0.1)
-        
-        time.sleep(1)
+        # Actualizar datos de la cocina
+        updateKitchenModules()
 
-        tanukitchen.readJson()
+        if tanukitchen.active:
+            print(time.ctime())
+            
+            scale.readValue()
+            stove.readValue()
+            smoke.readValue()
+
+            if extractor.active:
+                extractor.extract()
+                
+            time.sleep(0.1)
+        time.sleep(5)
+
+def updateKitchenModules():
+    tanukitchen.getData()
+    scale.getData()
+    stove.getData()
+    smoke.getData()
+    extractor.getData()
 
 def __init__():
-    tanukitchen.readJson()
+    tanukitchen.getData()
+    tanukitchen.getKitchenData()
+
+    global scale, stove, smoke, extractor
+    scale = Scale(tanukitchen.dataModules["scale"]["_id"])
+    stove = Stove(tanukitchen.dataModules["stove"]["_id"])
+    smoke = SmokeDetector(tanukitchen.dataModules["smoke_detector"]["_id"])
+    extractor = Extractor(tanukitchen.dataModules["extractor"]["_id"])
+
     _process()

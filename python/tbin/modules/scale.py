@@ -1,15 +1,17 @@
 import random
+import time
 
 from .module import Module
 
 class Scale(Module):
     
-    def __init__(self, jRoute):
-        super().__init__(jRoute, 0)
+    def __init__(self, id):
+        super().__init__(id)
     
     def readValue(self):
-        self.value = random.random() * 100
-
-        self.readJson()
-        self.writeJson("value", self.value)
+        if self.active:
+            self.value = random.random() * 100
+        else:
+            self.value = 0
+        self.insertValue("values", self.value)
     

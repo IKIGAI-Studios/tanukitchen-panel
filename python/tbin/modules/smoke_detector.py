@@ -1,15 +1,18 @@
 import random
+import time
 
 from .module import Module
 
 class SmokeDetector(Module):
-    
-    def __init__(self, jRoute):
-        super().__init__(jRoute, 2)
+
+    def __init__(self, id):
+        super().__init__(id)
     
     def readValue(self):
-        self.value = random.random() * 10
+        if self.active:
+            self.value = random.random() * 10
+        else:
+            self.value = 0
 
-        self.readJson()
-        self.writeJson("value", self.value)
+        self.insertValue("values", self.value)
     
