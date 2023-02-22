@@ -2,38 +2,23 @@
     "running": true,
     "modules": [
         {
-            "state": true,
+            "state": false,
             "name": "Bascula",
-            "value": 0,
-            "connected": false
+            "value": 0
         },
         {
             "state": true,
             "name": "Estufa",
-            "value": 0,
-            "connected": false
-        },
-        {
-            "state": true,
-            "name": "Detector de humo",
-            "value": 10,
-            "connected": false
+            "value": 150.57737479419643
         },
         {
             "state": false,
-            "name": "Extractor",
-            "connected": false
+            "name": "Detector de humo",
+            "value": 0
         },
         {
-            "state": true,
-            "name": "Tanque de Gas",
-            "connected": false
-        },
-        {
-            "state": true,
-            "name": "Horno",
-            "value": 55.6548,
-            "connected": false
+            "state": false,
+            "name": "Extractor"
         }
     ]
 }

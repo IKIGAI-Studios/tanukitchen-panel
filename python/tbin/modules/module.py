@@ -1,36 +1,61 @@
 # coding=utf-8
-import json
+import tbin.modules.bd.action_db as tanukitchenDB
+from bson.objectid import ObjectId
+from bson.datetime_ms import DatetimeMS
+from datetime import datetime
 
 class Module:
 
-    def __init__(self, jRoute, position):
-        self.jRoute = jRoute
-        self.position = position
-        self.data = {}
+    def __init__(self, id):
+        self.id = id
+
+        self.name = ""
+        self.active = True
         self.value = 0
+
+        self.getData()
     
     def readValue(self):
         # Función para override
         pass
 
-    def getValue(self):
-        return self.value  
-
     def turnOn(self):
-        self.readJson()
-        self.writeJson("state", True)
+        self.updateModule(self.id, "active", True)
     
     def turnOff(self):
-        self.readJson()
-        self.writeJson("state", False)
-        self.writeJson("value", 0)
-
-    def writeJson(self, attr, val):
-        with open(self.jRoute, "w") as modulos_json_salida:
-            self.data["modules"][self.position][attr] = val
-            # Escribir el archivo
-            json.dump(self.data, modulos_json_salida, indent=4)
+        self.updateModule(self.id, "active", False)
     
-    def readJson(self):
-        with open(self.jRoute) as modulos_json:
-            self.data = json.load(modulos_json)
+    def getData(self):
+        data = tanukitchenDB.getDocumentById(
+            "modules",
+            {
+                "_id": ObjectId(self.id)
+            }
+        )
+        self.name = data["name"]
+        self.active = data["active"]
+    
+    def updateModule(id, key, value):
+        tanukitchenDB.update(
+            "modules",
+            {
+                "_id": ObjectId(id),
+            },
+            {
+                key: value
+            }
+        )
+    
+    def insertValue(self, array, value):
+        tanukitchenDB.push(
+            "modules",
+            {
+                "_id": ObjectId(self.id),
+            },
+            array,
+            {
+                "date": datetime.now(),
+                "value": value
+            },
+            0
+        )
