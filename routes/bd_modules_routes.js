@@ -3,10 +3,19 @@ const { spawn } = require('child_process');
 const { json } = require('express');
 const fs = require('fs');
 const Module = require('../models/moduleModel');
+const Recipe = require('../models/recipeModel');
 
 routes.get('/getModules/', async(req, res) => {
     try {
         res.json(await Module.find());
+    } catch (e) {
+        console.error(`Error: ${e}`);
+    }
+});
+
+routes.get('/getRecipes/', async(req, res) => {
+    try {
+        res.json(await Recipe.find());
     } catch (e) {
         console.error(`Error: ${e}`);
     }
