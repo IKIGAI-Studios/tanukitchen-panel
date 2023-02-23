@@ -1,6 +1,7 @@
 const routes = require('express').Router();
 const User = require('../models/userModel');
 const Kitchen = require('../models/kichenModel');
+const Recipe = require('../models/recipeModel');
 const $ = require('jquery');
 
 routes.get('/login', (req, res) => {
@@ -70,5 +71,17 @@ routes.get('/recipes/:user', async(req, res) => {
     }
 });
 
+routes.get('/recipe/:user/:id', async(req, res) => {
+    try {
+        let usr = await User.find({user:req.params.user, active: true});
+        let kitchen = await Kitchen.find({id:usr.id_kitchen, active: true});
+        let recipe = await Recipe.find({_id: req.params.id})
+        obj = {"user": usr[0], "kitchen": kitchen[0], "recipe": recipe[0]};
+        res.render('stepsRecipes', obj);
+    } catch (e) {
+        code = {msj: `Error ${e}`};
+        res.render('login', code)
+    }
+});
 
 module.exports = routes;

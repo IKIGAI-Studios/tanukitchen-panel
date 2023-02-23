@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/TanukitchenLogo-White.png">
+    <title>Your Recipes</title>
+    <%-include('templates/header')%>
+    <%-include('templates/navbar')%>
+
+    <div class="container text-center">
+        <div class="justify-content-center"> 
+            <h1 class="tk-text" id="recipe_name"></h1>
+            <div class="d-flex justify-content-center">
+                <h2 class="tk-text"> Step: <h2 class="tk-text" id="current_step"> 0 /</h2> / <h2 class="tk-text" id="total_steps">0</h2></h2>
+            </div>
+        </div>
+        <div class="justify-content-center row tk-text">
+            <div class="col">
+                <h2>Instructions: </h2>
+                <ol id="instructions_list"></ol>
+            </div> 
+            <div class="col">
+                <h2>Ingredients: </h2>
+                <ol id="ingredients_list"></ol>
+            </div> 
+        </div>
+
+        <div class="justify-content-center row tk-text">
+            <button class="btn tk-form-btn" id="btn_inst_ready" onclick="readyInstruction()"> Instruction 1 Ready </button>
+        </div>
+    </div>
+
+
+    <script>
+        window.onload=init();
+        recipe = {}; // obj de la receta
+        stepNum = 0; // contador pasos
+        instNum = 1; // contador instrucciones  
+        finished = false; // status receta
+
+        function init() {
+            // Obtener la receta por el id
+            fetch('http://localhost:3000/api/modules/getRecipe/<%= obj.recipe._id %>')
+            .then((response) => response.json())
+                .then((json) => { 
+                    // Regresa un arreglo de recetas por eso seleccionamos el primer elemento
+                    recipe = json[0];
+                    // Inicializar valores
+                    setValues();
+                    finished = false;
+                    $('#recipe_name').html(recipe.name);
+                    $('#total_steps').html(recipe.steps.length);
+                });
+        }
+
+        function setValues() {
+            // Vaciar lista de instrucciones
+            $('#instructions_list').html('');
+            // Insertar paso actual
+            $('#current_step').html((stepNum + 1) + ' /');
+
+            let listTag = '';
+            
+            // Recorrer las instrucciones del paso actual e insertarlo en la lista con el id inst_(#num de la instruccion)
+            recipe.steps[stepNum].instructions.map((instruc, i) => {
+                listTag += '<li id="inst_' + (i + 1) + '">' + instruc + '</li>';
+            });
+            
+            // Append -> Se agrega al html sin remplazar
+            $('#instructions_list').append(listTag);
+        }
+
+        function readyInstruction() {
+            // Si se acabo la receta se redirecciona
+            if (finished) {
+                // Cambiar cuando existan sesiones
+                window.location.replace('http://localhost:3000/login');
+            } else {
+                // Verificar que el numero de instruccion actual sea diferente del total de instrucciones
+                if (instNum != recipe.steps[stepNum].instructions.length) {
+                    // Tachar la instruccion realizada
+                    $('#inst_' + instNum).html('<strike>' + $('#inst_' + instNum).text() + '</strike>');
+                    instNum++;
+                    // Cambiar texto btn
+                    $('#btn_inst_ready').text('Instruction ' + instNum + ' Ready');
+                }
+                else {
+                    // Tachar ultima instruccion
+                    $('#inst_' + instNum).html('<strike>' + $('#inst_' + instNum).text() + '</strike>');
+                    // Verificar que el numero de pasos actual sea diferente del total de pasos
+                    if (stepNum + 1 != recipe.steps.length) {
+                        stepNum++;
+                        instNum = 1;
+                        // Obtener instrucciones y insertar los valores
+                        setValues();
+                        // Cambiar texto btn
+                        $('#btn_inst_ready').text('Instruction ' + instNum + ' Ready');
+                    } else {
+                        // Indicar que se acabo la receta
+                        alert('se acabo la receta');
+                        // Cambiar texto boton para ir a inicio
+                        $('#btn_inst_ready').text('Go to home');
+                        // Cambiar status de receta
+                        finished = true;
+                    }
+                }
+            }
+        }
+
+        var items = document.querySelectorAll('.nav-item a');
+        items[1].setAttribute('aria-current', "page");
+
+    </script>
+    <%- include('templates/footer')%>

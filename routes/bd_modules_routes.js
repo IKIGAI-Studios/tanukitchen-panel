@@ -21,6 +21,14 @@ routes.get('/getRecipes/', async(req, res) => {
     }
 });
 
+routes.get('/getRecipe/:id', async(req, res) => {
+    try {
+        res.json(await Recipe.find({_id: req.params.id}));
+    } catch (e) {
+        console.error(`Error: ${e}`);
+    }
+});
+
 routes.get('/getValue/:name', async(req, res) => {
     try {
         res.json(await Module.find({name:req.params.name}));
