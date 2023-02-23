@@ -13,7 +13,7 @@
         <div class="justify-content-center"> 
             <h1 class="tk-text" id="recipe_name"></h1>
             <div class="d-flex justify-content-center">
-                <h2 class="tk-text"> Step: <h2 class="tk-text" id="current_step"> 0 /</h2> / <h2 class="tk-text" id="total_steps">0</h2></h2>
+                <h2 class="tk-text" id="verb_step"> Step:</h2> <h2 class="tk-text" id="current_step"> 0 /</h2> / <h2 class="tk-text" id="total_steps">0</h2>
             </div>
         </div>
         <div class="justify-content-center row tk-text">
@@ -58,18 +58,33 @@
         function setValues() {
             // Vaciar lista de instrucciones
             $('#instructions_list').html('');
+            $('#ingredients_list').html('');
             // Insertar paso actual
             $('#current_step').html((stepNum + 1) + ' /');
+            $('#verb_step').html(recipe.steps[stepNum].verb + ':');
 
-            let listTag = '';
+            let listTag = '', ingTag = '';
             
             // Recorrer las instrucciones del paso actual e insertarlo en la lista con el id inst_(#num de la instruccion)
             recipe.steps[stepNum].instructions.map((instruc, i) => {
                 listTag += '<li id="inst_' + (i + 1) + '">' + instruc + '</li>';
             });
+
+            // Recorrer las instrucciones del paso actual e insertarlo en la lista con el id inst_(#num de la instruccion)
+            recipe.steps[stepNum].ingredients.map((ing, i) => {
+                let j = 0;
+                while (ing != recipe.ingredients[j].id_ingr){
+                    console.log(ing)
+                    console.log(recipe.ingredients[j].id_ingr) 
+                    j++;
+                }  
+                
+                ingTag += '<li id="ing_' + (i + 1) + '">' + recipe.ingredients[i].name + '</li>';
+            });
             
             // Append -> Se agrega al html sin remplazar
             $('#instructions_list').append(listTag);
+            $('#ingredients_list').append(ingTag);
         }
 
         function readyInstruction() {
