@@ -2,7 +2,8 @@ const routes = require('express').Router();
 const User = require('../models/userModel');
 const Kitchen = require('../models/kichenModel');
 const Recipe = require('../models/recipeModel');
-const axios = require('axios');
+const { Configuration, OpenAIApi } = require("openai");
+
 
 routes.get('/login', (req, res) => {
     code = {msj: ""};
@@ -85,35 +86,17 @@ routes.get('/recipe/:user/:id', async(req, res) => {
 });
 
 routes.get('/chatgpt/:msj', async(req, res) => { 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer <TU_TOKEN>'
-    };
-
-    const data = {
-        prompt: 'Hola, ¿cómo estás?',
-        temperature: 0.7,
-        max_tokens: 50
-    };
-
-    axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', data, { headers })
-    .then(response => {
-        console.log(response.data.choices[0].text);
-    })
-    .catch(error => {
-        console.log(error);
+    const configuration = new Configuration({
+        apiKey: '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',
     });
+    const openai = new OpenAIApi(configuration);
 
-    try {
-        let usr = await User.find({user:req.params.user, active: true});
-        let kitchen = await Kitchen.find({id:usr.id_kitchen, active: true});
-        let recipe = await Recipe.find({_id: req.params.id})
-        obj = {"user": usr[0], "kitchen": kitchen[0], "recipe": recipe[0]};
-        res.render('stepsRecipes', obj);
-    } catch (e) {
-        code = {msj: `Error ${e}`};
-        res.render('login', code)
-    }
+    const completion = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: req.params.msj,
+    });
+    console.log(completion.data.choices[0].text);
+    res.json(completion.data.choices[0].text);
 });
 
 module.exports = routes;
