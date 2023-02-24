@@ -40,7 +40,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="tk-panel-data">Temperature</div>
                 </div>
-                    <p class="tk-panel-data" id="stove_temp">0 C°</p>
+                    <p class="tk-panel-data" id="stove_temp">0 C°</p><p class="tk-panel-data" id="stove_goal">Goal: 0 C°</p>
                 <div class="d-flex justify-content-center">
                     <div class="form-check form-switch">
                         <input id="toStove" type="checkbox" class="form-check-input" role="switch"  onclick="state_change('stove', $('#toStove').prop('checked'))">
@@ -114,10 +114,16 @@
     <script>
         window.onload=readDB();
         window.onload=init();
-        recipe = {}; // obj de la receta
-        stepNum = 0; // contador pasos
-        instNum = 1; // contador instrucciones  
-        finished = false; // status receta
+        var recipe = {}; // obj de la receta
+        var stepNum = 0; // contador pasos
+        var instNum = 1; // contador instrucciones  
+        var finished = false; // status receta
+        var scale_weight = 0;
+        var scale_goal_exist = false;
+        var peso_correcto = false;
+        var stove_temp = 0;
+        var stove_goal_exist = false;
+        var temp_correcta = false;
 
         /* Primero creamos los objetos para poder grabar nuestra voz con el microfono */
         const reconocimientoVoz = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -140,7 +146,19 @@
             if(mensaje.includes('instruction ready') || mensaje.includes('instrucción completa')){
                 $('#btn_inst_ready').click()
                 voz.text = 'ok, instruction marked as complete'
-            }else{
+            } else if(mensaje.includes('scale ') || mensaje.includes('instrucción completa')){
+                $('#btn_inst_ready').click()
+                voz.text = 'ok, instruction marked as complete'
+            } else if(mensaje.includes('instruction ready') || mensaje.includes('instrucción completa')){
+                $('#btn_inst_ready').click()
+                voz.text = 'ok, instruction marked as complete'
+            } else if(mensaje.includes('instruction ready') || mensaje.includes('instrucción completa')){
+                $('#btn_inst_ready').click()
+                voz.text = 'ok, instruction marked as complete'
+            } else if(mensaje.includes('instruction ready') || mensaje.includes('instrucción completa')){
+                $('#btn_inst_ready').click()
+                voz.text = 'ok, instruction marked as complete'
+            } else {
                 voz.text = mensaje + ' isnt a tanuki command'
             }
             window.speechSynthesis.speak(voz)
@@ -214,14 +232,22 @@
 
         function setGoal() {
             $('#scale_goal').text('');
+            $('#stove_goal').text('');
+            scale_goal_exist = false;
+            stove_goal_exist = false;
             // Verificar el modulo que se va a utilizar en esa isntruccion
             switch(recipe.steps[stepNum].instructions[instNum-1].module) {
                 case 'scale':
                         if (!$('#toScale').prop('checked')) alert('Asegurate de prender la báscula');
                         $('#scale_goal').text('Goal: ' + recipe.steps[stepNum].instructions[instNum-1].goal + ' gr');
+                        scale_goal_exist = true, peso_correcto = false;
+                        $('#btn_inst_ready').attr('disabled', true);
                     break;
-                case 'scale':
+                case 'stove':
                     if (!$('#toStove').prop('checked')) alert('Asegurate de prender la estufa');
+                    $('#stove_goal').text('Goal: ' + recipe.steps[stepNum].instructions[instNum-1].goal + ' C°');
+                        stove_goal_exist = true, temp_correcta = false;
+                        $('#btn_inst_ready').attr('disabled', true);
                     break;
             }
         }
@@ -288,16 +314,41 @@
                         case 'scale': 
                                 $('#toScale').prop('checked', module.active);
                                 $('#scale_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                                $('#scale_weight').html(Math.round(module.values[0].value) + ' gr');
+                                scale_weight = Math.round(module.values[0].value);
+                                $('#scale_weight').html(scale_weight + ' gr');
                             break;
                         case 'stove': 
                                 $('#toStove').prop('checked', module.active);
                                 $('#stove_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                                $('#stove_temp').html(module.values[0].value + ' C°');
+                                stove_temp = Math.round(module.values[0].value);
+                                $('#stove_temp').html(stove_temp + ' C°');
                             break;
                     }
                 });
             });
+            evaluateGoals();
+        }
+
+        function evaluateGoals() {
+            if (!peso_correcto) {
+                if (scale_goal_exist) {
+                    // Verificar con un margen de error de 4 gr
+                    if (scale_weight >= recipe.steps[stepNum].instructions[instNum-1].goal - 4 && scale_weight <= recipe.steps[stepNum].instructions[instNum-1].goal + 4)  {
+                        alert('Peso correcto')
+                        peso_correcto = true;
+                        $('#btn_inst_ready').attr('disabled', false);
+                    }
+                }
+            } else if (!temp_correcta) {
+                if (stove_goal_exist) {
+                    // Verificar con un margen de error de 4 gr
+                    if (stove_temp >= recipe.steps[stepNum].instructions[instNum-1].goal - 10 && stove_temp <= recipe.steps[stepNum].instructions[instNum-1].goal + 4)  {
+                        alert('Temperatura correcta')
+                        temp_correcta = true;
+                        $('#btn_inst_ready').attr('disabled', false);
+                    }
+                }
+            }
         }
 
         function state_change(module, state) {
@@ -314,5 +365,6 @@
         var items = document.querySelectorAll('.nav-item a');
         items[1].setAttribute('aria-current', "page");
 
+        setInterval('readDB()', 2000);
     </script>
     <%- include('templates/footer')%>
