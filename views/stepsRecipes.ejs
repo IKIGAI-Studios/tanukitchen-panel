@@ -16,6 +16,7 @@
                 <h2 class="tk-text" id="verb_step"> Step:</h2> <h2 class="tk-text" id="current_step"> 0 /</h2> / <h2 class="tk-text" id="total_steps">0</h2>
             </div>
         </div>
+
         <div class="justify-content-center row tk-text">
             <div class="col">
                 <h2>Instructions: </h2>
@@ -28,17 +29,125 @@
         </div>
 
         <div class="justify-content-center row tk-text">
+            <!-- COLUMNA ESTUFA -->
+            <div class="col-sm" id="div_stove" style="display: none">
+                <div class="d-flex justify-content-center">
+                    <div class="tk-panel-label">Stove</div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <img src="/img/tkStove.png" class="tk-panel-icon"></img>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="tk-panel-data">Temperature</div>
+                </div>
+                    <p class="tk-panel-data" id="stove_temp">0 C°</p>
+                <div class="d-flex justify-content-center">
+                    <div class="form-check form-switch">
+                        <input id="toStove" type="checkbox" class="form-check-input" role="switch"  onclick="state_change('stove', $('#toStove').prop('checked'))">
+                        <label for="toStove" class="tk-text" id="stove_turn">Turn On</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COLUMNA EXTRACTOR -->
+            <div class="col-sm" id="div_extractor" style="display: none">
+                <div class="d-flex justify-content-center">
+                    <div class="tk-panel-label">Smoke Extractor</div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <img src="/img/tkExtractor.png" class="tk-panel-icon"></img>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                    <div class="tk-panel-data" id="smoke_message">Off</div>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="form-check form-switch">
+                        <input id="toSmoke" type="checkbox" class="form-check-input" role="switch" onclick="state_change('extractor', $('#toSmoke').prop('checked'))">
+                        <label for="toSmoke" class="tk-text" id="smoke_turn">Turn On</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COLUMNA BÁSCULA -->
+            <div class="col-sm" id="div_scale" style="display: none">
+                <div class="d-flex justify-content-center">
+                    <div class="tk-panel-label">Scale</div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <img src="/img/tkScale.png" class="tk-panel-icon"></img>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="tk-panel-data">Weight</div>
+                </div>
+                <p class="tk-panel-data" id="scale_weight">0 gr</p><p class="tk-panel-data" id="scale_goal">Goal: 0 gr</p>
+                <div class="d-flex justify-content-center">
+                    <div class="form-check form-switch">
+                        <input id="toScale" type="checkbox" class="form-check-input" role="switch" onclick="state_change('scale', $('#toScale').prop('checked'))">
+                        <label for="toScale" class="tk-text" id="scale_turn">Turn On</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA SMOKE DETECTOR -->
+            <div class="col-sm" id="div_fire" style="display: none">
+                <div class="d-flex justify-content-center">
+                    <div class="tk-panel-label">Risk of Fire</div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <img src="/img/tkFire.png" class="tk-panel-icon"></img>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                    <p class="tk-panel-data" id="fire_message">Everything seems normal</p>
+                </div>
+                    <p class="tk-panel-data" id="fire_percent">0 %</p>
+            </div>
+        </div>
+
+        <div class="justify-content-center row tk-text mt-3">
             <button class="btn tk-form-btn" id="btn_inst_ready" onclick="readyInstruction()"> Instruction 1 Ready </button>
         </div>
+
+        <img src="https://cdn-icons-png.flaticon.com/512/1231/1231089.png" width="5%" onclick="speech2text()" class="mt-5">
     </div>
 
 
     <script>
+        window.onload=readDB();
         window.onload=init();
         recipe = {}; // obj de la receta
         stepNum = 0; // contador pasos
         instNum = 1; // contador instrucciones  
         finished = false; // status receta
+
+        /* Primero creamos los objetos para poder grabar nuestra voz con el microfono */
+        const reconocimientoVoz = window.SpeechRecognition || window.webkitSpeechRecognition
+        const reconocimiento = new reconocimientoVoz()
+
+        /* metodo que se ejecuta al empezar a granar */
+        reconocimiento.onstart = ()=>{
+            console.log('Recording...')
+        }
+        /* Metodo que se ejecuta al terminar la grabación */
+        reconocimiento.onresult = event =>{
+            let mensaje = event.results[0][0].transcript
+            console.info(mensaje)
+            leerTextoCondicionado(mensaje)
+        }
+        /* Función que condiciona la respuesta dependiendo de el contenido de la grabación */
+        const leerTextoCondicionado = (mensaje)=>{
+            const voz = new SpeechSynthesisUtterance()
+            // Agregar comandos aqui
+            if(mensaje.includes('instruction ready') || mensaje.includes('instrucción completa')){
+                $('#btn_inst_ready').click()
+                voz.text = 'ok, instruction marked as complete'
+            }else{
+                voz.text = mensaje + ' isnt a tanuki command'
+            }
+            window.speechSynthesis.speak(voz)
+        }
+        function speech2text() {
+            reconocimiento.start()
+        }
 
         function init() {
             // Obtener la receta por el id
@@ -56,9 +165,16 @@
         }
 
         function setValues() {
+            // Establecer metas
+            setGoal();
             // Vaciar lista de instrucciones
             $('#instructions_list').html('');
             $('#ingredients_list').html('');
+            // Ocultar modulos anteriores
+            $('#div_stove').css('display', 'none'); 
+            $('#div_fire').css('display', 'none');
+            $('#div_extractor').css('display', 'none');
+            $('#div_scale').css('display', 'none');
             // Insertar paso actual
             $('#current_step').html((stepNum + 1) + ' /');
             $('#verb_step').html(recipe.steps[stepNum].verb + ':');
@@ -67,24 +183,47 @@
             
             // Recorrer las instrucciones del paso actual e insertarlo en la lista con el id inst_(#num de la instruccion)
             recipe.steps[stepNum].instructions.map((instruc, i) => {
-                listTag += '<li id="inst_' + (i + 1) + '">' + instruc + '</li>';
+                listTag += '<li id="inst_' + (i + 1) + '">' + instruc.do + '</li>';
             });
 
             // Recorrer las instrucciones del paso actual e insertarlo en la lista con el id inst_(#num de la instruccion)
-            recipe.steps[stepNum].ingredients.map((ing, i) => {
+            recipe.steps[stepNum].ingredients.map((ing) => {
                 let j = 0;
-                while (ing != recipe.ingredients[j].id_ingr){
-                    console.log(ing)
-                    console.log(recipe.ingredients[j].id_ingr) 
-                    j++;
-                }  
-                
-                ingTag += '<li id="ing_' + (i + 1) + '">' + recipe.ingredients[i].name + '</li>';
+                while (ing != recipe.ingredients[j].id_ingr) j++;
+                ingTag += '<li id="ing_' + (j + 1) + '">' + recipe.ingredients[j].name + '</li>';
             });
             
             // Append -> Se agrega al html sin remplazar
             $('#instructions_list').append(listTag);
             $('#ingredients_list').append(ingTag);
+
+            // Mostrar solo los modulos que se ocupan
+            recipe.steps[stepNum].module.map((module) => {
+                switch(module) {
+                    case 'scale': 
+                            $('#div_scale').css('display', 'block'); 
+                        break;
+                    case 'stove': 
+                            $('#div_stove').css('display', 'block'); 
+                            $('#div_fire').css('display', 'block');
+                            $('#div_extractor').css('display', 'block');
+                        break;
+                }
+            });
+        }
+
+        function setGoal() {
+            $('#scale_goal').text('');
+            // Verificar el modulo que se va a utilizar en esa isntruccion
+            switch(recipe.steps[stepNum].instructions[instNum-1].module) {
+                case 'scale':
+                        if (!$('#toScale').prop('checked')) alert('Asegurate de prender la báscula');
+                        $('#scale_goal').text('Goal: ' + recipe.steps[stepNum].instructions[instNum-1].goal + ' gr');
+                    break;
+                case 'scale':
+                    if (!$('#toStove').prop('checked')) alert('Asegurate de prender la estufa');
+                    break;
+            }
         }
 
         function readyInstruction() {
@@ -121,7 +260,55 @@
                         finished = true;
                     }
                 }
+                setGoal();
             }
+        }
+
+        function readDB() {
+        fetch('http://localhost:3000/api/modules/getModules')
+        .then((response) => response.json())
+            .then((json) => {
+                json.map((module) => {
+                    switch (module.name) {
+                        case 'extractor': 
+                                $('#toSmoke').prop('checked', module.active);
+                                $('#smoke_turn').html(module.active ? 'Turn Off' : 'Turn On');
+                                $('#smoke_message').html(module.active ? 'On' : 'Off');
+                            break;
+                        case 'smoke_detector': 
+                                msj = 'Everything seems normal';
+                                if (module.values[0].value >= 30 && module.values[0].value <= 60) {
+                                    msj = 'Warning, please open all windows';
+                                } else if (module.values[0].value >= 60) {
+                                    msj = 'Alert, FIRE';
+                                }
+                                $('#fire_percent').html(module.values[0].value + ' %');
+                                $('#fire_message').html(msj);
+                            break;
+                        case 'scale': 
+                                $('#toScale').prop('checked', module.active);
+                                $('#scale_turn').html(module.active ? 'Turn Off' : 'Turn On');
+                                $('#scale_weight').html(Math.round(module.values[0].value) + ' gr');
+                            break;
+                        case 'stove': 
+                                $('#toStove').prop('checked', module.active);
+                                $('#stove_turn').html(module.active ? 'Turn Off' : 'Turn On');
+                                $('#stove_temp').html(module.values[0].value + ' C°');
+                            break;
+                    }
+                });
+            });
+        }
+
+        function state_change(module, state) {
+            url = 'http://localhost:3000/api/bin/';
+            state ? url += 'start' : url += 'stop';
+            url += '_' + module;
+            fetch(url)
+            .then((response) => response.json())
+                .then((json) => {
+                    json ? alert(`${module}: ${state ? 'Turned On' : 'Turned Off'} Successfully`) : alert(json);
+                });
         }
 
         var items = document.querySelectorAll('.nav-item a');
