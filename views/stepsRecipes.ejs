@@ -126,21 +126,21 @@
         var temp_correcta = false;
 
         /* Primero creamos los objetos para poder grabar nuestra voz con el microfono */
-        const reconocimientoVoz = window.SpeechRecognition || window.webkitSpeechRecognition
-        const reconocimiento = new reconocimientoVoz()
+        const recVoz = window.SpeechRecognition || window.webkitSpeechRecognition
+        const rec = new recVoz()
 
         /* metodo que se ejecuta al empezar a granar */
-        reconocimiento.onstart = ()=>{
+        rec.onstart = ()=>{
             console.log('Recording...')
         }
         /* Metodo que se ejecuta al terminar la grabación */
-        reconocimiento.onresult = event =>{
+        rec.onresult = event =>{
             let mensaje = event.results[0][0].transcript
             console.info(mensaje)
-            leerTextoCondicionado(mensaje)
+            readCommand(mensaje)
         }
         /* Función que condiciona la respuesta dependiendo de el contenido de la grabación */
-        const leerTextoCondicionado = (mensaje)=>{
+        const readCommand = (mensaje)=>{
             const voz = new SpeechSynthesisUtterance()
             // Agregar comandos aqui
             if(mensaje.includes('instruction ready') || mensaje.includes('instrucción completa')){
@@ -152,7 +152,7 @@
             window.speechSynthesis.speak(voz)
         }
         function speech2text() {
-            reconocimiento.start()
+            rec.start()
         }
 
         function init() {

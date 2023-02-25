@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const connectMongoDB = () => {
-    const linkMongoDB = 'mongodb+srv://root:root@tanucluster.98dt6wk.mongodb.net/myFirstDatabase'
+    const linkMongoDB = process.env.URL_MONGODB
     mongoose.set('strictQuery', false);
     mongoose.connect(linkMongoDB)
     .then(() => {

@@ -12,15 +12,14 @@
               </tr>
             </thead>
             <tbody>
-              <% 
-                console.log(obj)
+              <% console.log(obj)
                 obj.user.forEach((usr) => {
               %>
                 <tr>
                   <td><%= usr.user %></td>
                   <td><%= usr.name %></td>
                   <td><%= obj.kitchen.name %></td>
-                  <td><a href="/control_panel/<%= usr.user %>">Usar</a></td>
+                  <td><a href="/userSelect/<%= usr.user %>">Usar</a></td>
                 </tr>
               <% 
                 })

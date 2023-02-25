@@ -173,6 +173,9 @@
 </div>
 
 <script>
+    var items = document.querySelectorAll('.nav-item a');
+    items[1].setAttribute('aria-current', "page");
+    
     jsonRead = {};
 
     function readJson() {
@@ -215,7 +218,6 @@
       .then((response) => response.json())
         .then((json) => {
             json.map((module) => {
-                console.log(module)
                 switch (module.name) {
                     case 'extractor': 
                             $('#toSmoke').prop('checked', module.active);
@@ -251,9 +253,6 @@
                             $('#toGas').prop('checked', module.active);
                             $('#gas_turn').html(module.active ? 'Close' : 'Open');
                             $('#gas_message').html(module.active ? 'Open' : 'Close');
-                        break;
-                    case 'test': 
-                            // console.log(module.values[0].value)
                         break;
                 }
             });
