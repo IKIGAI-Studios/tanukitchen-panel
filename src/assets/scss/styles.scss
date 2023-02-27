@@ -3,13 +3,13 @@ $tk-darkblue: #272f3f;
 $tk-violet: #4B6CB7;
 $tk-green: #06BEB6;
 $tk-blue: #48B1BF;
-$tk-beige: #F2E7D5;
+$tk-white: #D9D9D9;
 
 // tanukitchen map
 $tanukitchen-colors: (
     "tk-darkblue": $tk-darkblue,
     "tk-green": $tk-green,
-    "tk-beige": $tk-beige,
+    "tk-white": $tk-white,
     "tk-blue": $tk-blue,
     "tk-violet": $tk-violet
 );
@@ -40,6 +40,9 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
     font-family: 'somatic';
 }
 
+@mixin tk-shadow{
+    box-shadow:  -3px 4px 4px rgba(0, 0, 0, 0.25);
+}
 //
 // animations
 // 
@@ -53,7 +56,13 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 .tk-text{
     @include text-manrope();
     text-decoration: none;
-    color: $tk-beige !important; 
+    color: $tk-white !important; 
+}
+
+.tk-dark-text{
+    @include text-manrope();
+    text-decoration: none;
+    color: $tk-darkblue !important; 
 }
 
 .tk-ani-grad{
@@ -90,7 +99,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 
 .tk-form-label{
     @include text-manrope(); 
-    color: $tk-beige;
+    color: $tk-white;
     font-size: 1rem;
     font-weight: normal;
 }
@@ -98,7 +107,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 .tk-form-input{
     @include text-manrope();
     margin-bottom: 1rem;
-    background-color: $tk-beige;
+    background-color: $tk-white;
     border: 3px solid $tk-darkblue;
     border-radius: 15px;
     transition: border 0.4s ease-in-out;
@@ -106,12 +115,12 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 
 .tk-form-input:focus{
     border: 3px solid $tk-blue;
-    background-color: $tk-beige;
+    background-color: $tk-white;
 }
 
 .tk-form-chkbx{
-    border: 3px solid $tk-beige;
-    background-color: $tk-beige;
+    border: 3px solid $tk-white;
+    background-color: $tk-white;
 }
 
 .tk-form-chkbx:checked{
@@ -157,7 +166,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 
 .tk-usr-label{
     @include text-manrope(); 
-    color: $tk-beige;
+    color: $tk-white;
     padding-left: 0;
     width: 10rem;
     font-size: 1rem;
@@ -169,20 +178,20 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
     color: $tk-darkblue;
     width: 40%;
     margin-bottom: 3rem;
-    background-color: $tk-beige;
+    background-color: $tk-white;
     border: 3px solid $tk-darkblue;
     border-radius: 15px;
     transition: border 0.4s ease-in-out;
 
     &:focus{
         border: 3px solid $tk-blue;
-        background-color: $tk-beige;
+        background-color: $tk-white;
     }
 
     &:disabled{
         background-color: $tk-darkblue;
         border: 2px solid $tk-violet;
-        color: $tk-beige;
+        color: $tk-white;
     }
 }
 
@@ -209,7 +218,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
     max-height: 60em; 
     font-family: 'Courier New', Courier, monospace; 
     font-size: small;           
-    color: $tk-beige;
+    color: $tk-white;
     &:focus {
         border: none;
     }
@@ -220,13 +229,13 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 }
 
 .tk-showData{
-    padding: 1rem;
+    @include tk-shadow();
     @include text-manrope();
-    color: $tk-beige;
+    padding: 1rem;
+    color: $tk-white;
     background-color: $tk-darkblue;
     margin: 1rem;
     border-left: 2px solid $tk-violet;
-    box-shadow: rgba(7, 3, 31, 0.534) 0px 4px 6px -1px, rgba(7, 3, 31, 0.534) 0px 2px 4px -1px;   
     &:hover{
         color: $tk-blue;
         background-color: #1f242e;
@@ -247,20 +256,20 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 
     &:hover{
      background-color: $tk-violet;
-     color: $tk-beige !important;   
+     color: $tk-white !important;   
     }
 }
 
 .tk-cli{
     @include text-manrope();
     color: $tk-darkblue;
-    background-color: $tk-beige;
+    background-color: $tk-white;
     border-radius: 2rem;
     transition: border 0.4s ease-in-out;
 
     &:focus{
         border: 3px solid $tk-blue;
-        background-color: $tk-beige;
+        background-color: $tk-white;
     }
 }
 
@@ -271,7 +280,7 @@ $theme-colors: map-merge($theme-colors, $tanukitchen-colors);
 .tk-card{
     background-color: $tk-darkblue;
     border: 2px solid $tk-blue;
-    box-shadow: rgba(7, 3, 31, 0.534) 0px 4px 6px -1px, rgba(7, 3, 31, 0.534) 0px 2px 4px -1px;   
+    @include tk-shadow();
 }
 
 thead{
@@ -289,7 +298,8 @@ tbody, td, th, table{
 
 .tk-panel-label{
     @include text-manrope();
-    background-color: $tk-beige;
+    @include tk-shadow();
+    background-color: $tk-white;
     color: $tk-darkblue;
     font-weight: bolder;
     font-size: 1rem;
@@ -302,8 +312,9 @@ tbody, td, th, table{
 
 .tk-recipes-label{
     @include text-manrope();
+    @include tk-shadow();
     width: 100%;
-    background-color: $tk-beige;
+    background-color: $tk-white;
     color: $tk-darkblue;
     font-weight: bolder;
     font-size: 1rem;
@@ -315,14 +326,21 @@ tbody, td, th, table{
 
 .tk-panel-data{
     @include text-manrope();
-    color: $tk-beige;
+    color: $tk-white;
     margin-top: 10px;
     text-align: center;
 }
 
 .tk-divider{
     border-style: solid;
-    border-color: $tk-beige;
+    border-color: $tk-white;
+    width: 90%;
+    margin: 1rem;
+}
+
+.tk-dark-divider{
+    border-style: solid;
+    border-color: $tk-darkblue;
     width: 90%;
     margin: 1rem;
 }
@@ -349,10 +367,73 @@ tbody, td, th, table{
 a[aria-current='page']{
     border-bottom-style: solid;
     border-color: $tk-green;
-
+    box-shadow: 0px 3px  rgba(0, 0, 0, 0.25);
 }
 
 .tk-recipe-type{
     width: 80%;
     height: auto;
+}
+
+// profiles
+
+@keyframes profile-hover {
+    from {
+        height: 10rem;
+        width: 10rem;
+    }
+    to {
+        height: 11rem;
+        width: 11rem;
+    }   
+}
+
+.profile-card{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.avatar{
+    height: 10rem;
+    width: auto;
+    border: solid;
+    border-color: $tk-violet;
+    border-radius: 100%;
+    margin: 1rem;
+    @include tk-shadow();
+    object-fit: cover;
+    }
+
+.avatar:hover{
+    animation-name: profile-hover;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.statistics-card{
+    @include text-manrope();
+    @include tk-shadow();
+    background-color: $tk-white;
+    border-radius: 20px;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.tk-stats-icon{
+    height: 5rem;
+    width: auto;
+}
+
+.tk-progress{
+    background-color: $tk-darkblue;
+    color: $tk-darkblue; 
+}
+
+.tk-progress-bar{
+    background-color: $tk-green;
 }

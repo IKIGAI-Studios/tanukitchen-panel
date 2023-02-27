@@ -13,18 +13,19 @@
                     <a href="/recipes" class="nav-link tk-text">Recipes</a>
                 </li>
                 <li class="nav-item px-4">
-                    <a href="#" class="nav-link tk-text">Profile</a>
+                    <a href="/profile" class="nav-link tk-text">Profile</a>
                 </li>
             </ul>
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" width="3%" onclick="chatgpt()">
         <div class="d-flex justify-content-center">
-            <a href="#" class="tk-link align-self-center mx-2"><%= obj.user.name %></a>
+           <a href="/profile" class="tk-link align-self-center mx-2"><%= obj.user.name %></a>
             <img class="tk-nb-avatar" src="/img/anomanches.jpg" alt="avatar">
         </div>
     </nav>
 </div>
-<script>
+
+    <script>
     /* Primero creamos los objetos para poder grabar nuestra voz con el microfono */
     const recVozGPT = window.SpeechRecognition || window.webkitSpeechRecognition
     const recGPT = new recVozGPT()

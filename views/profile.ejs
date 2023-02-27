@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/TanukitchenLogo-White.png">
+    <title>My TanuProfile :D</title>
+    <%- include('templates/header')%>
+    <%- include('templates/navbar')%>
+    
+    <div class="container">
+        <div class="d-flex justify-content-center mt-4">
+            <h1 class="tk-text">Mi Perejil <3 </h1>
+        </div>
+
+        <div class="row mt-3">
+            <h5 class="tk-text">Profile Info</h5>
+        </div>
+        <% console.log(obj)%>
+        <div class="d-flex mt-3">
+            <div class="col-sm">
+                <div class="statistics-card">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <img src="/img/TanukitchenLogo-Black.png" style="height: 10rem; width: auto;">
+                        <h5 class="tk-ani-grad align-self-center ml-2"><%= obj.user.user %></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="row m-3">
+                    <span class="tk-text">Age: </span>
+                    <p class="tk-text">69</p>     
+                </div>
+                <div class="row m-3">
+                    <span class="tk-text">Gender: </span>
+                    <p class="tk-text">Male</p>     
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="row m-3">
+                    <span class="tk-text">Name: </span>
+                    <p class="tk-text"><%= obj.user.name %></p>     
+                </div>
+                <div class="row m-3">
+                    <span class="tk-text">Kitchen: </span>
+                    <p class="tk-text"><%= obj.kitchen.name %></p>     
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <h5 class="tk-text">Statistics</h5>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+
+                <!-- Card Stofa  -->
+                <div class="statistics-card">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <img src="/img/icons/tkStoveBlue.png" class="tk-stats-icon">
+                        <h5 class="tk-dark-text align-self-center ml-2">Stove</h5>
+                    </div>
+                    <hr class="tk-dark-divider">
+                    <div class="container">
+                        <div class="row">
+                            <p class="tk-dark-text">Time usage: 69 hours</p>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text">Electrical usage (kwh)</p>
+                        </div>
+                        <div class="progress tk-progress" role="progressbar" aria-label="electricalUsageStove" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar tk-progress-bar" style="width: 70%;"></div>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text">Medio XD</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm">
+             
+                <!-- Card detector  -->
+                <div class="statistics-card">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <img src="/img/icons/tkDetectorBlue.png" class="tk-stats-icon">
+                        <h5 class="tk-dark-text align-self-center ml-2">S. Detector</h5>
+                    </div>
+                    <hr class="tk-dark-divider">
+                    <div class="container">
+                        <div class="row">
+                            <p class="tk-dark-text">Average detection (all time): </p>
+                        </div>
+                        <div class="progress tk-progress" role="progressbar" aria-label="electricalUsageStove" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar tk-progress-bar" style="width: 70%;"></div>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text">Normal XD</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm">
+            
+                <!-- Card extractor  -->
+                <div class="statistics-card">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <img src="/img/icons/tkExtractorBlue.png" class="tk-stats-icon">
+                        <h5 class="tk-dark-text align-self-center ml-2">S. Extractor</h5>
+                    </div>
+                    <hr class="tk-dark-divider">
+                    <div class="container">
+                        <div class="row">
+                            <p class="tk-dark-text">Activations (all time): 240 times</p>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text">Max duration activated: 5 hours</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm">
+                                
+                <!-- Card Recipes  -->
+                <div class="statistics-card">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <img src="/img/icons/tkRecipesBlue.png" class="tk-stats-icon">
+                        <h5 class="tk-dark-text align-self-center ml-2">Stove</h5>
+                    </div>
+                    <hr class="tk-dark-divider">
+                    <div class="container">
+                        <div class="row">
+                            <p class="tk-dark-text">Completed: 69 recipes</p>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text">Last recipe completed: Hotcakes</p>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text">Favorite recipe: Hotcakes</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    var items = document.querySelectorAll('.nav-item a');
+    items[2].setAttribute('aria-current', "page");
+ 
+</script>
+
+<%- include('templates/footer')%>

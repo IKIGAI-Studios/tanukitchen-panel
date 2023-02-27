@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="src\img\TanukitchenLogo-White.png">
-    <title>Tanukitchen</title>
+    <link rel="shortcut icon" href="/img/TanukitchenLogo-White.png">
+    <title>Control Panel</title>
     <%-include('templates/header')%>
     <%-include('templates/navbar')%>
     
 <div class="container text-center">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mt-4">
         <h1 class="tk-text">Control Panel</h1>
     </div>
     <div class="row">
@@ -21,7 +21,7 @@
                 <div class="tk-panel-label">Stove</div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="/img/tkStove.png" class="tk-panel-icon"></img>
+                <img src="/img/icons/tkStove.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Temperature</div>
@@ -41,7 +41,7 @@
                 <div class="tk-panel-label">Smoke Extractor</div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="/img/tkExtractor.png" class="tk-panel-icon"></img>
+                <img src="/img/icons/tkExtractor.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <div class="tk-panel-data" id="smoke_message">Off</div>
@@ -60,7 +60,7 @@
                 <div class="tk-panel-label">Scale</div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="/img/tkScale.png" class="tk-panel-icon"></img>
+                <img src="/img/icons/tkScale.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Weight</div>
@@ -84,7 +84,7 @@
                 <div class="tk-panel-label">Gas Tank</div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="/img/tkGas.png" class="tk-panel-icon"></img>
+                <img src="/img/icons/tkGas.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data" id="gas_message">Close</div>
@@ -120,7 +120,7 @@
                 <div class="tk-panel-label">Risk of Fire</div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="/img/tkFire.png" class="tk-panel-icon"></img>
+                <img src="/img/icons/tkFire.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <p class="tk-panel-data" id="fire_message">Everything seems normal</p>
@@ -174,7 +174,7 @@
 
 <script>
     var items = document.querySelectorAll('.nav-item a');
-    items[1].setAttribute('aria-current', "page");
+    items[0].setAttribute('aria-current', "page");
     
     jsonRead = {};
 

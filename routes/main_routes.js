@@ -132,4 +132,19 @@ routes.get('/test', (req, res) => {
     res.render('test');
 });
 
+routes.get('/profile', (req, res)=>{
+    try {
+        if (req.session && req.session.user) {
+            res.locals.obj = req.session.user;
+            res.render('profile');
+        } else {
+            // Si no hay una sesión abierta, redirigir al usuario a la página de inicio de sesión
+            res.redirect('/login');
+        }
+    } catch (e) {
+        code = {msj: `Error ${e}`};
+        res.render('login', code)
+    }
+})
+
 module.exports = routes;

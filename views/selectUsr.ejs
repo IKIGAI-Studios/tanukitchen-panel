@@ -1,7 +1,36 @@
-<%-include('templates/header')%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/TanukitchenLogo-White.png">
+    <title>Select your tanu-account</title>
+  <%-include('templates/header')%>
 
-  <div class="d-flex justify-content-center">
-    <div class="container mt-3 form-signin text-center">
+  <div class="container text-center">
+    <div class="d-flex justify-content-center">
+      <h1 class="tk-ani-grad mt-5">Select your profile</h1>
+    </div>
+    
+    <div class="d-flex mt-5 justify-content-center">
+        <% console.log(obj)
+        obj.user.forEach((usr) => {
+      %>
+        <div class="col-sm">
+          <a href="/userSelect/<%= usr.user %>" class="tk-text">
+            <div class="profile-card">
+                <img src="/img/TanukitchenLogo-White.png" class="avatar"/>
+                <h5 class="tk-text"><%= usr.user %></h5>
+            </div>
+        </a>
+        </div>
+        <%})%>
+
+       </div> 
+      </div>
+
+
           <table id="table">
             <thead>
             <tr>
@@ -26,8 +55,6 @@
               %>
             </tbody>
           </table>
-    </div>
-  </div>
+
     
   <%- include('templates/footer')%>
-
