@@ -2,6 +2,7 @@ const routes = require('express').Router();
 const User = require('../models/userModel');
 const Kitchen = require('../models/kichenModel');
 const Recipe = require('../models/recipeModel');
+const Module = require('../models/moduleModel');
 const { Configuration, OpenAIApi } = require("openai");
 let obj = {};
 
@@ -52,7 +53,6 @@ routes.get('/userSelect/:user', async (req, res) => {
 
 routes.get('/control_panel', (req, res) => {
     try {
-        console.log(req.session && req.session.user)
         if (req.session && req.session.user) {
             res.locals.obj = req.session.user;
             res.render('control_panel');
@@ -128,14 +128,16 @@ routes.post('/register', async (req, res) => {
 });
 
 routes.get('/test', (req, res) => {
-    obj = req.session.user;
+    res.locals.obj = req.session.user;
     res.render('test');
 });
 
-routes.get('/profile', (req, res)=>{
+routes.get('/profile', async(req, res)=>{
     try {
         if (req.session && req.session.user) {
-            res.locals.obj = req.session.user;
+            console.log(req.session.user.kitchen._id)
+            let modules = await Module.find({id_kitchen: req.session.user.kitchen.name})
+            res.locals.obj = {user: req.session.user.user, kitchen: req.session.user.kitchen, modules: modules};
             res.render('profile');
         } else {
             // Si no hay una sesión abierta, redirigir al usuario a la página de inicio de sesión

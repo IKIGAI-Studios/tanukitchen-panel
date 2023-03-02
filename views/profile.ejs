@@ -8,6 +8,7 @@
     <title>My TanuProfile :D</title>
     <%- include('templates/header')%>
     <%- include('templates/navbar')%>
+    <% console.log(obj) %>
     
     <div class="container">
         <div class="d-flex justify-content-center mt-4">
@@ -17,7 +18,6 @@
         <div class="row mt-3">
             <h5 class="tk-text">Profile Info</h5>
         </div>
-        <% console.log(obj)%>
         <div class="d-flex mt-3">
             <div class="col-sm">
                 <div class="statistics-card">
@@ -30,11 +30,11 @@
             <div class="col-sm">
                 <div class="row m-3">
                     <span class="tk-text">Age: </span>
-                    <p class="tk-text">18</p>     
+                    <p class="tk-text"><%= obj.user.age %></p>     
                 </div>
                 <div class="row m-3">
                     <span class="tk-text">Gender: </span>
-                    <p class="tk-text">Male</p>     
+                    <p class="tk-text"><%= obj.user.gender %></p>     
                 </div>
             </div>
             <div class="col-sm">
@@ -65,16 +65,19 @@
                     <hr class="tk-dark-divider">
                     <div class="container">
                         <div class="row">
-                            <p class="tk-dark-text">Time usage: 69 hours</p>
+                            <p class="tk-dark-text" id="stove_time_usage">Time usage: 0</p>
                         </div>
                         <div class="row">
-                            <p class="tk-dark-text">Electrical usage (kwh)</p>
+                            <p class="tk-dark-text" id="stove_avg_detection">Average detection (all time): </p>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text" id="stove_electrical_usage">Electrical usage: $0 mxn</p>
                         </div>
                         <div class="progress tk-progress" role="progressbar" aria-label="electricalUsageStove" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar tk-progress-bar" style="width: 70%;"></div>
+                            <div class="progress-bar tk-progress-bar" style="width: 40%;" id="stove_progress_bar"></div>
                         </div>
                         <div class="row">
-                            <p class="tk-dark-text">Medio</p>
+                            <p class="tk-dark-text" id="stove_electrical_indicator">Medio</p>
                         </div>
                     </div>
                 </div>
@@ -91,13 +94,13 @@
                     <hr class="tk-dark-divider">
                     <div class="container">
                         <div class="row">
-                            <p class="tk-dark-text">Average detection (all time): </p>
+                            <p class="tk-dark-text" id="smoke_avg_detection">Average detection (all time): 0 %</p>
                         </div>
                         <div class="progress tk-progress" role="progressbar" aria-label="electricalUsageStove" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar tk-progress-bar" style="width: 70%;"></div>
+                            <div class="progress-bar tk-progress-bar" style="width: 70%;" id="smoke_progress_bar"></div>
                         </div>
                         <div class="row">
-                            <p class="tk-dark-text">Normal</p>
+                            <p class="tk-dark-text" id="smoke_detection_indicator">Normal</p>
                         </div>
                     </div>
                 </div>
@@ -114,10 +117,10 @@
                     <hr class="tk-dark-divider">
                     <div class="container">
                         <div class="row">
-                            <p class="tk-dark-text">Activations (all time): 240 times</p>
+                            <p class="tk-dark-text" id="extractor_activation_count">Activations (all time): 0 times</p>
                         </div>
                         <div class="row">
-                            <p class="tk-dark-text">Max duration activated: 5 hours</p>
+                            <p class="tk-dark-text" id="extractor_max_activated">Max duration activated: 0 hours</p>
                         </div>
                     </div>
                 </div>
@@ -129,18 +132,31 @@
                 <div class="statistics-card">
                     <div class="d-flex" style="justify-content: space-around;">
                         <img src="/img/icons/tkRecipesBlue.png" class="tk-stats-icon">
-                        <h5 class="tk-dark-text align-self-center ml-2">Stove</h5>
+                        <h5 class="tk-dark-text align-self-center ml-2">General</h5>
                     </div>
                     <hr class="tk-dark-divider">
                     <div class="container">
                         <div class="row">
-                            <p class="tk-dark-text">Completed: 6 recipes</p>
+                            <p class="tk-dark-text" id="general_recipes_completed">Completed: <%= obj.user.recipes_completed %> recipes</p>
                         </div>
                         <div class="row">
-                            <p class="tk-dark-text">Last recipe completed: Hotcakes</p>
+                            <p class="tk-dark-text" id="general_last_recipe_completed">Last recipe completed: <%= obj.user.last_recipe %></p>
                         </div>
                         <div class="row">
-                            <p class="tk-dark-text">Favorite recipe: Hotcakes</p>
+                            <p class="tk-dark-text" id="general_favorite_recipe">Favorite recipe: 
+                                <% name = "", count = 0
+                                    obj.user.count_recipes.map((recipe, i) => {
+                                        if (recipe.count == count) {
+                                            name += ' and ' + recipe.name
+                                            count = recipe.count
+                                        }
+                                        if (recipe.count > count) {
+                                            name = recipe.name
+                                            count = recipe.count
+                                        }
+                                    })
+                                %> <%= name + ' with ' + count + ' times' %>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -151,9 +167,51 @@
     </div>
 
 <script>
+    window.onload=setData();
+
     var items = document.querySelectorAll('.nav-item a');
     items[2].setAttribute('aria-current', "page");
- 
+    const modules = [];
+    function setData() {
+        fetch('http://localhost:3000/api/modules/getModules')
+        .then((response) => response.json())
+            .then((json) => { 
+                json.map((module) => {
+                    switch(module.name) {
+                        case 'stove':
+                                scnds = module.time_usage.seconds
+                                hours = (scnds / 60) / 60
+                                kwh = hours * 0.809
+                                $('#stove_time_usage').text('Time usage: ' + scnds)
+                                $('#stove_electrical_usage').text('Electrical usage: $' + kwh + ' mxm')
+                                $('#stove_progress_bar').css('width', hours >= 50 ? 100 + '%' : (hours * 2) + '%')
+                                $('#stove_electrical_indicator').text(hours >= 30? 'Alta' : hours >= 10? 'Media' : 'Baja')
+                                fetch('http://localhost:3000/api/modules/getAvgValues/stove')
+                                .then((response) => response.json())
+                                    .then((json) => { $('#stove_avg_detection').text('Average detection (all time): ' + Math.round(json[0].averageValue) + ' °') });
+                                
+                            break;
+                        case 'smoke_detector':
+                                fetch('http://localhost:3000/api/modules/getAvgValues/smoke_detector')
+                                .then((response) => response.json())
+                                    .then((json) => { 
+                                        percent = Math.round(json[0].averageValue)
+                                        $('#smoke_avg_detection').text('Average detection (all time): ' + percent + ' %') 
+                                        $('#smoke_progress_bar').css('width', percent + '%')
+                                        $('#smoke_detection_indicator').text(percent >= 60? 'Alto' : percent >= 20? 'Medio' : 'Bajo')
+                                    });
+                            break;
+                        case 'extractor':
+                                $('#extractor_activation_count').text('Activations (all time): ' + module.activations + ' times') 
+                                $('#extractor_max_activated').text('Max duration activated: ' + Math.round(module.max_active.seconds / 60 / 60) + ' hours') 
+                            break;
+                    }
+                })
+             });
+        $('#general_recipes_completed').text('Activations (all time): ' + module.activations + ' times') 
+        $('#general_last_recipe_completed').text('Activations (all time): ' + module.activations + ' times') 
+        $('#general_favorite_recipe').text('Activations (all time): ' + module.activations + ' times') 
+    }
 </script>
 
 <%- include('templates/footer')%>

@@ -7,7 +7,19 @@ const Recipe = require('../models/recipeModel');
 
 routes.get('/getModules/', async(req, res) => {
     try {
-        res.json(await Module.find());
+        res.json(await Module.find({id_kitchen: req.session.user.kitchen.name}));
+    } catch (e) {
+        console.error(`Error: ${e}`);
+    }
+});
+
+routes.get('/getAvgValues/:module', async(req, res) => {
+    try {
+        res.json(await Module.aggregate([
+            { $match: { name: req.params.module, id_kitchen: req.session.user.kitchen.name } }, // filtrar por el nombre del objeto
+            { $unwind: "$values" }, // desagregar el arreglo values
+            { $group: { _id: null, averageValue: { $avg: "$values.value" }}}
+        ]));
     } catch (e) {
         console.error(`Error: ${e}`);
     }
