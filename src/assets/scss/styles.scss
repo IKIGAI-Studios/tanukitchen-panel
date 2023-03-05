@@ -346,12 +346,12 @@ tbody, td, th, table{
 }
 
 #toStove:focus, #toOven:focus, #toGas:focus,
-#toExtractor:focus, #toScale:focus{
+#toSmoke:focus, #toScale:focus{
     box-shadow: 5px $tk-violet; 
 }
 
 #toStove:checked, #toOven:checked, #toGas:checked,
-#toExtractor:checked, #toScale:checked{
+#toSmoke:checked, #toScale:checked{
     background-color: $tk-green; 
 }
 
