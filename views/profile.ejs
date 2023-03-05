@@ -55,6 +55,42 @@
 
         <div class="row">
             <div class="col-sm">
+                                
+                <!-- Card Recipes  -->
+                <div class="statistics-card">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <img src="/img/icons/tkRecipesBlue.png" class="tk-stats-icon">
+                        <h5 class="tk-dark-text align-self-center ml-2">General</h5>
+                    </div>
+                    <hr class="tk-dark-divider">
+                    <div class="container">
+                        <div class="row">
+                            <p class="tk-dark-text" id="general_recipes_completed">Completed: <%= obj.user.recipes_completed %> recipes</p>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text" id="general_last_recipe_completed">Last recipe completed: <%= obj.user.last_recipe %></p>
+                        </div>
+                        <div class="row">
+                            <p class="tk-dark-text" id="general_favorite_recipe">Favorite recipe: 
+                                <% name = "", count = 0
+                                    obj.user.count_recipes.map((recipe, i) => {
+                                        if (recipe.count == count) {
+                                            name += ' and ' + recipe.name
+                                            count = recipe.count
+                                        }
+                                        if (recipe.count > count) {
+                                            name = recipe.name
+                                            count = recipe.count
+                                        }
+                                    })
+                                %> <%= name + ' with ' + count + ' times' %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm">
 
                 <!-- Card Stofa  -->
                 <div class="statistics-card">
@@ -126,42 +162,7 @@
                 </div>
 
             </div>
-            <div class="col-sm">
-                                
-                <!-- Card Recipes  -->
-                <div class="statistics-card">
-                    <div class="d-flex" style="justify-content: space-around;">
-                        <img src="/img/icons/tkRecipesBlue.png" class="tk-stats-icon">
-                        <h5 class="tk-dark-text align-self-center ml-2">General</h5>
-                    </div>
-                    <hr class="tk-dark-divider">
-                    <div class="container">
-                        <div class="row">
-                            <p class="tk-dark-text" id="general_recipes_completed">Completed: <%= obj.user.recipes_completed %> recipes</p>
-                        </div>
-                        <div class="row">
-                            <p class="tk-dark-text" id="general_last_recipe_completed">Last recipe completed: <%= obj.user.last_recipe %></p>
-                        </div>
-                        <div class="row">
-                            <p class="tk-dark-text" id="general_favorite_recipe">Favorite recipe: 
-                                <% name = "", count = 0
-                                    obj.user.count_recipes.map((recipe, i) => {
-                                        if (recipe.count == count) {
-                                            name += ' and ' + recipe.name
-                                            count = recipe.count
-                                        }
-                                        if (recipe.count > count) {
-                                            name = recipe.name
-                                            count = recipe.count
-                                        }
-                                    })
-                                %> <%= name + ' with ' + count + ' times' %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
         </div>
 
     </div>

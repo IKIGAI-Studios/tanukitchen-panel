@@ -11977,6 +11977,7 @@ tbody, td, th, table {
   font-family: "manrope";
   box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.25);
   width: 100%;
+  background-size: 200% 100%;
   background-color: #D9D9D9;
   color: #272f3f;
   font-weight: bolder;
@@ -11985,6 +11986,14 @@ tbody, td, th, table {
   text-align: center;
   margin: 4rem 1rem 1rem 1rem;
   padding: 2px;
+  transition: all 0.8s ease-in-out;
+}
+
+.tk-recipes-label:hover {
+  background-position: 100% 0;
+  transition: all 0.8s ease-in-out;
+  color: #D9D9D9;
+  background-image: linear-gradient(to right, #06BEB6, #4B6CB7);
 }
 
 .tk-panel-data {
@@ -12090,8 +12099,19 @@ a[aria-current=page] {
 .tk-progress {
   background-color: #272f3f;
   color: #272f3f;
+  box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .tk-progress-bar {
   background-color: #06BEB6;
+  box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.steps-ingredients {
+  font-family: "manrope";
+  box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
 }/*# sourceMappingURL=styles.css.map */
