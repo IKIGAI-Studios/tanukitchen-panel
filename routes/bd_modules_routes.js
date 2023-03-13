@@ -71,7 +71,7 @@ routes.get('/updateRecipesCount/:recipe', async(req, res) => {
         if (pos < 0) res.json(false)
         else {
             count = session.user.count_recipes[pos].count + 1
-            await Module.findOneAndUpdate({user: session.user.user, "count_recipes.name": req.params.recipe}, {"count_recipes.count": count});
+            await User.findOneAndUpdate({user: session.user.user, "count_recipes.name": req.params.recipe}, {"count_recipes.count": count});
             let usr = await User.find({user: session.user.user});
             console.log(session.user.count_recipes[pos].count)
             res.json(usr)
