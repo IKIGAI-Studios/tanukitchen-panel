@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const connectMongoDB = () => {
-    const linkMongoDB = process.env.URL_MONGODB
+    const linkMongoDB = process.env.MONGO_CONNECTION_LINK
     mongoose.set('strictQuery', false);
     mongoose.connect(linkMongoDB)
     .then(() => {

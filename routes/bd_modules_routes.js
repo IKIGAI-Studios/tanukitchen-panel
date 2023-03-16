@@ -64,20 +64,46 @@ routes.get('/setValue/:name/:value', async(req, res) => {
 routes.get('/updateRecipesCount/:recipe', async(req, res) => {
     try {
         let session = req.session.user
+        let usr = session.user.user
+        let userObj = await User.find({user: usr});
+
         let pos = -1
-        session.user.count_recipes.map((obj, i) => {
+        userObj[0].count_recipes.map((obj, i) => {
             if(obj.name == req.params.recipe) pos = i
         })
-        if (pos < 0) res.json(false)
+        if (pos < 0) {
+            let recipe = req.params.recipe
+            await User.updateOne(
+                { "user": usr },
+                { $push: { "count_recipes": { "name": recipe, "count": 1 } } });
+            userObj = await User.find({user: usr});
+            res.json(userObj)
+        }
         else {
-            count = session.user.count_recipes[pos].count + 1
-            await User.findOneAndUpdate({user: session.user.user, "count_recipes.name": req.params.recipe}, {"count_recipes.count": count});
-            let usr = await User.find({user: session.user.user});
-            console.log(session.user.count_recipes[pos].count)
-            res.json(usr)
+            let count = userObj[0].count_recipes[pos].count + 1
+            let recipe = req.params.recipe
+            await User.updateOne(
+                { "user": usr, "count_recipes.name": recipe },
+                { $set: { "count_recipes.$.count": count, "last_recipe": recipe } });
+            userObj = await User.find({user: usr});
+            res.json(userObj)
         }
     } catch (e) {
         console.error(`Error: ${e}`);
+    }
+});
+
+routes.get('/setTempTarget/:tmp', async(req, res) => {
+    try {
+        let session = req.session.user
+        let ktch = session.kitchen.name
+        await Module.updateOne(
+            { id_kitchen: ktch, name: "stove" },
+            { $set: { target: req.params.tmp } });
+        res.json(true)
+    } catch (e) {
+        console.error(`Error: ${e}`);
+        res.json(e)
     }
 });
 

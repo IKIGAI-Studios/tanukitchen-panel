@@ -97,3 +97,16 @@ function state_change(module, state) {
             json ? alert(`${module}: ${state ? 'Turned On' : 'Turned Off'} Successfully`) : alert(json);
         });
 }
+
+function setTempTarget() {
+    url = 'http://localhost:3000/api/modules/setTempTarget/';
+    url += $('#input_temp_stove').val()
+    if (!$('#input_temp_stove').val()) alert('Debes insertar una temperatura valida')
+    else {
+        fetch(url)
+        .then((response) => response.json())
+            .then((json) => {
+                json ? alert(`Temperature Target settled in: ${$('#input_temp_stove').val()}`) : alert(json);
+            });
+    }
+}

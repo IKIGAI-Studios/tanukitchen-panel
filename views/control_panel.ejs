@@ -29,6 +29,12 @@
                 <p class="tk-panel-data" id="stove_temp">0 C°</p>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
+                    <input type="number" class="form-control input-number tk-text" id="input_temp_stove" placeholder="Set the temperature" min="80" max="150"/>
+                    <button class="form-control" onclick="setTempTarget()">Set Temperature</button>
+               </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="form-check form-switch">
                     <input id="toStove" type="checkbox" class="form-check-input" role="switch"  onclick="state_change('stove', $('#toStove').prop('checked'))">
                     <label for="toStove" class="tk-text" id="stove_turn">Turn On</label>
                </div>

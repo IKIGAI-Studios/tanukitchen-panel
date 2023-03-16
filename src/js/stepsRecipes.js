@@ -105,10 +105,21 @@ function setGoal() {
         case 'stove':
             if (!$('#toStove').prop('checked')) alert('Asegurate de prender la estufa');
             $('#stove_goal').text('Goal: ' + recipe.steps[stepNum].instructions[instNum-1].goal + ' C°');
+                setTempTarget(recipe.steps[stepNum].instructions[instNum-1].goal)
                 stove_goal_exist = true, temp_correcta = false;
                 $('#btn_inst_ready').attr('disabled', true);
             break;
     }
+}
+
+function setTempTarget(tmp) {
+    url = 'http://localhost:3000/api/modules/setTempTarget/';
+    url += tmp
+    fetch(url)
+    .then((response) => response.json())
+        .then((json) => {
+            json ? alert(`Temperature Target settled in: ${tmp}`) : alert(json);
+        });
 }
 
 function readyInstruction() {
@@ -140,7 +151,9 @@ function readyInstruction() {
                 // Indicar que se acabo la receta
                 alert('se acabo la receta');
                 // Actualizar el conteo de bd
-                
+                fetch('http://localhost:3000/api/modules/updateRecipesCount/' + recipe.name)
+                .then((response) => response.json())
+                    .then((json) => {  });
                 // Cambiar texto boton para ir a inicio
                 $('#btn_inst_ready').text('Go to home');
                 // Cambiar status de receta
