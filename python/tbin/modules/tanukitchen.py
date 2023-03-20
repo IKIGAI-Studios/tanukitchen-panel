@@ -18,7 +18,7 @@ class Tanukitchen:
         self.updateKitchenValue("active", False)
     
     def getData(self):
-        data = tanukitchenDB.getDocumentById(
+        data = tanukitchenDB.getDocumentByFilter(
             "kitchens",
             {
                 "_id": ObjectId(self.id)
@@ -42,7 +42,7 @@ class Tanukitchen:
         self.dataModules = tanukitchenDB.getDocuments(
             "modules",
             {
-                "id_kitchen": ObjectId(self.id)
+                "id_kitchen": self.name
             }
         )
     

@@ -1,32 +1,41 @@
 # coding=utf-8
 import tbin.modules.bd.action_db as tanukitchenDB
 from bson.objectid import ObjectId
-from bson.datetime_ms import DatetimeMS
 from datetime import datetime
+import RPi.GPIO as GPIO
+
+#sudo apt-get update
+#sudo apt-get install rpi.gpio
+
 
 class Module:
-
-    def __init__(self, id):
-        self.id = id
+    # Constructor
+    def __init__(self, id, serial):
+        self.id = id    
+        self.serial = serial
 
         self.name = ""
         self.active = True
         self.value = 0
+        self.target = 0
 
         self.getData()
     
+    # Función para override
     def readValue(self):
-        # Función para override
         pass
-
+    
+    # Encender módulo
     def turnOn(self):
         self.updateModule(self.id, "active", True)
     
+    # Apagar módulo
     def turnOff(self):
         self.updateModule(self.id, "active", False)
     
+    # Obtener datos del módulo
     def getData(self):
-        data = tanukitchenDB.getDocumentById(
+        data = tanukitchenDB.getDocumentByFilter(
             "modules",
             {
                 "_id": ObjectId(self.id)
@@ -34,7 +43,16 @@ class Module:
         )
         self.name = data["name"]
         self.active = data["active"]
+
+        # Comprobaciones
+        if self.name != "extractor":
+            self.value = data["values"][0]["value"]
+        
+        if self.name == "stove":
+            self.target = data["target"]
+
     
+    # Actualizar un dato del módulo
     def updateModule(id, key, value):
         tanukitchenDB.update(
             "modules",
@@ -46,6 +64,7 @@ class Module:
             }
         )
     
+    # Insertar valor de lectura en el módulo
     def insertValue(self, array, value):
         tanukitchenDB.push(
             "modules",
@@ -59,3 +78,20 @@ class Module:
             },
             0
         )
+
+    # Leer valores desde arduino
+    def getValueFromArduino(self, name):
+        line = self.ser.readline().decode('utf-8').rstrip()
+
+        # Dividir la línea de datos en las partes correspondientes
+        parts = line.split('|')
+
+        for part in parts:
+            if part.find(name) is not -1:
+                var = part.split(':')
+
+                # Recuperar valor del módulo
+                self.value = int(var[1])
+            else:
+                print(name + ' no se reconoce')
+                self.value = 0
