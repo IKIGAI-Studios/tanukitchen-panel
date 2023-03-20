@@ -8,7 +8,17 @@ const moduleSchema = new mongoose.Schema({
     target: { type: Number, required: true },
     active: { type: Boolean, required: true },
     activations: { type: Number, required: true },
-    id_kitchen: { type: String, required: true }
+    id_kitchen: { type: String, required: true }, 
+    max_active: {
+        startTime: Date,
+        endTime: Date,
+        seconds: Number
+    },
+    time_usage: {
+        startTime: Date,
+        endTime: Date,
+        seconds: Number
+    },
 });
 
 module.exports = mongoose.model('modules', moduleSchema);

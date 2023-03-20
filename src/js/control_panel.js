@@ -1,10 +1,11 @@
+window.onload=readDB();
 var items = document.querySelectorAll('.nav-item a');
 items[0].setAttribute('aria-current', "page");
 
 jsonRead = {};
 
 function readJson() {
-    fetch('http://localhost:3000/api/bin/modules')
+    fetch('/api/bin/modules')
     .then((response) => response.json())
     .then((json) => {
         $('#toScale').prop('checked', json.modules[0].state);
@@ -39,9 +40,10 @@ function readJson() {
 }
 
 function readDB() {
-    fetch('http://localhost:3000/api/modules/getModules')
+    fetch('/api/modules/getModules')
     .then((response) => response.json())
     .then((json) => {
+        if (!json) window.location.replace("/login");
         json.map((module) => {
             switch (module.name) {
                 case 'extractor': 
@@ -62,7 +64,7 @@ function readDB() {
                 case 'scale': 
                         $('#toScale').prop('checked', module.active);
                         $('#scale_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                        $('#scale_weight').html(module.values[0].value + ' gr');
+                        $('#scale_weight').html((module.active ? module.values[0].value : 0) + ' gr');
                     break;
                 case 'stove': 
                         $('#toStove').prop('checked', module.active);
@@ -88,25 +90,26 @@ function readDB() {
 setInterval('readDB()', 2000);
 
 function state_change(module, state) {
-    url = 'http://localhost:3000/api/bin/';
+    url = '/api/bin/';
     state ? url += 'start' : url += 'stop';
     url += '_' + module;
     fetch(url)
     .then((response) => response.json())
         .then((json) => {
-            json ? alert(`${module}: ${state ? 'Turned On' : 'Turned Off'} Successfully`) : alert(json);
+            json ? bsAlert(`The ${module} has been turned <strong>${state ? 'on' : 'off'}</strong> successfuly`, 'primary') : bsAlert(`The ${module} <strong>couldn't</strong> be turned  ${state ? 'on' : 'off'}`, 'danger');
         });
 }
 
 function setTempTarget() {
-    url = 'http://localhost:3000/api/modules/setTempTarget/';
+    url = '/api/modules/setTempTarget/';
     url += $('#input_temp_stove').val()
-    if (!$('#input_temp_stove').val()) alert('Debes insertar una temperatura valida')
+    if (!$('#input_temp_stove').val()) bsAlert(`You must enter a <strong>valid</strong> temperature`, 'warning')
     else {
         fetch(url)
         .then((response) => response.json())
             .then((json) => {
-                json ? alert(`Temperature Target settled in: ${$('#input_temp_stove').val()}`) : alert(json);
+                json ? bsAlert(`Temperature target settled in: <strong>${$('#input_temp_stove').val()}</strong> °`, 'info') : bsAlert(`The temperature target <strong>couldn't</strong> be settled`, 'danger')
+                ;
             });
     }
 }

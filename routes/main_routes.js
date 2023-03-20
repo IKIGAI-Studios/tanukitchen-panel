@@ -135,7 +135,6 @@ routes.get('/test', (req, res) => {
 routes.get('/profile', async(req, res)=>{
     try {
         if (req.session && req.session.user) {
-            console.log(req.session.user.kitchen._id)
             let modules = await Module.find({id_kitchen: req.session.user.kitchen.name})
             res.locals.obj = {user: req.session.user.user, kitchen: req.session.user.kitchen, modules: modules};
             res.render('profile');

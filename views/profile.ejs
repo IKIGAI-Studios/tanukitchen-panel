@@ -8,15 +8,14 @@
     <title>My TanuProfile :D</title>
     <%- include('templates/header')%>
     <%- include('templates/navbar')%>
-    <% console.log(obj) %>
     
     <div class="container">
         <div class="d-flex justify-content-center mt-4">
-            <h1 class="tk-text">Mi Perfil</h1>
+            <h1 class="tk-text">My profile</h1>
         </div>
 
         <div class="row mt-3">
-            <h5 class="tk-text">Profile Info</h5>
+            <h4 class="tk-text">Profile Info</h4>
         </div>
         <div class="d-flex mt-3">
             <div class="col-sm">
@@ -50,7 +49,7 @@
         </div>
 
         <div class="row mt-5">
-            <h5 class="tk-text">Statistics</h5>
+            <h4 class="tk-text">General Statistics</h4>
         </div>
 
         <div class="row">
@@ -132,7 +131,7 @@
                 <div class="statistics-card">
                     <div class="d-flex" style="justify-content: space-around;">
                         <img src="/img/icons/tkRecipesBlue.png" class="tk-stats-icon">
-                        <h5 class="tk-dark-text align-self-center ml-2">General</h5>
+                        <h5 class="tk-dark-text align-self-center ml-2">Personal</h5>
                     </div>
                     <hr class="tk-dark-divider">
                     <div class="container">
@@ -140,7 +139,7 @@
                             <p class="tk-dark-text" id="general_recipes_completed">Completed: <%= obj.user.recipes_completed %> recipes</p>
                         </div>
                         <div class="row">
-                            <p class="tk-dark-text" id="general_last_recipe_completed">Last recipe completed: <%= obj.user.last_recipe %></p>
+                            <p class="tk-dark-text" id="general_last_recipe_completed"></p>
                         </div>
                         <div class="row">
                             <p class="tk-dark-text" id="general_favorite_recipe">Favorite recipe: 
@@ -165,5 +164,13 @@
         </div>
     </div>
 <script src="js/profile.js"></script>
+<script>
+    fetch('/api/modules/getUser/<%= obj.user.user %>')
+    .then((response) => response.json())
+        .then((json) => { 
+            if (!json) window.location.replace("/login");
+            $('#general_last_recipe_completed').html('Last recipe completed: ' + json[0].last_recipe)
+    });
+</script>
 
 <%- include('templates/footer')%>

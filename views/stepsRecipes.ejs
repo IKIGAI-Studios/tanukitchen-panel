@@ -114,11 +114,12 @@
 <script>
     function init() {
         // Obtener la receta por el id
-        fetch('http://localhost:3000/api/modules/getRecipe/<%= obj.recipe._id %>')
+        fetch('/api/modules/getRecipe/<%= obj.recipe._id %>')
         .then((response) => response.json())
             .then((json) => { 
                 // Regresa un arreglo de recetas por eso seleccionamos el primer elemento
                 recipe = json[0];
+                readDB();
                 // Inicializar valores
                 setValues();
                 finished = false;

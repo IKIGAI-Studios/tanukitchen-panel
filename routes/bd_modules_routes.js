@@ -8,7 +8,19 @@ const User = require('../models/userModel')
 
 routes.get('/getModules/', async(req, res) => {
     try {
-        res.json(await Module.find({id_kitchen: req.session.user.kitchen.name}));
+        if(req.session && req.session.user) {
+            res.json(await Module.find({id_kitchen: req.session.user.kitchen.name}));
+        } else res.json(false)
+    } catch (e) {
+        console.error(`Error: ${e}`);
+    }
+});
+
+routes.get('/getUser/:user', async(req, res) => {
+    try {
+        if(req.session && req.session.user) {
+            res.json(await User.find({user: req.params.user}));
+        } else res.json(false)
     } catch (e) {
         console.error(`Error: ${e}`);
     }
@@ -75,7 +87,8 @@ routes.get('/updateRecipesCount/:recipe', async(req, res) => {
             let recipe = req.params.recipe
             await User.updateOne(
                 { "user": usr },
-                { $push: { "count_recipes": { "name": recipe, "count": 1 } } });
+                { $push: { "count_recipes": { "name": recipe, "count": 1 } } },
+                { $set: { "last_recipe": recipe } });
             userObj = await User.find({user: usr});
             res.json(userObj)
         }
@@ -103,7 +116,7 @@ routes.get('/setTempTarget/:tmp', async(req, res) => {
         res.json(true)
     } catch (e) {
         console.error(`Error: ${e}`);
-        res.json(e)
+        res.json(false)
     }
 });
 

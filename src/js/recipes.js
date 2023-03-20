@@ -4,7 +4,7 @@ var items = document.querySelectorAll('.nav-item a');
 items[1].setAttribute('aria-current', "page");
 
 function readDB() {
-    fetch('http://localhost:3000/api/modules/getRecipes')
+    fetch('/api/modules/getRecipes')
     .then((response) => response.json())
         .then((json) => {
             var htmlTags = "";
@@ -60,8 +60,4 @@ function readDB() {
             });
             if (json.length % 2 == 1) $('#container').append('<div class="col-sm mx-2">');    
         });
-}
-
-function redirect(id) {
-    alert(id);
 }

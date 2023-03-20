@@ -18,14 +18,21 @@
             </ul>
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" width="3%" onclick="chatgpt()">
-        <div class="d-flex justify-content-center">
-           <a href="/profile" class="tk-link align-self-center mx-2"><%= obj.user.name %></a>
-            <img class="tk-nb-avatar" src="/img/anomanches.jpg" alt="avatar">
+        <div class="d-flex justify-content-center dropdown tk-text">
+            <a href="/profile" class="tk-link align-self-center mx-2"><%= obj.user.user %></a>
+            <div class="dropstart tk-text">
+                <img class="tk-nb-avatar" src="/img/TanukitchenLogo-White.png" alt="avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item tk-text" href="/profile">Profile</a>
+                    <a class="dropdown-item tk-text" href="/login">Logout</a>
+                </div>
+            </div>
         </div>
     </nav>
+    <div id="div_alert"></div>
 </div>
 
-    <script>
+<script>
     /* Primero creamos los objetos para poder grabar nuestra voz con el microfono */
     const recVozGPT = window.SpeechRecognition || window.webkitSpeechRecognition
     const recGPT = new recVozGPT()
@@ -44,15 +51,33 @@
         const voice = new SpeechSynthesisUtterance()
         let rslt = '';
         // Agregar comandos aqui
-        await fetch('http://localhost:3000/chat-gpt/' + mensaje)
+        await fetch('/chat-gpt/' + mensaje)
             .then((response) => response.json())
                 .then((json) => { rslt = json }
             )
-        console.log(rslt);
+        bsAlert(`You asked Chat GPT: ${mensaje}. <br>This is the answer: ${rslt}`, 'info');
         voice.text = rslt;
+
+        let voices = window.speechSynthesis.getVoices();
+        let selectedVoice = voices.find((voice) => voice.name === 'Google español');
+        if (selectedVoice) voice.voice = selectedVoice;
+        
         window.speechSynthesis.speak(voice)
     }
+
     function chatgpt() {
         recGPT.start()
+    }
+
+    const bsAlert = (msg, type) => {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} tk-dark-text alert-dismissible" role="alert" id="alert_navbar">`,
+            `   <div>${msg}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            '</div>'
+        ].join('')
+
+        $('#div_alert').append(wrapper)
     }
 </script>

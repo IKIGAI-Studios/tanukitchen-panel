@@ -20,7 +20,7 @@ app.use(session({
   secret: process.env.SECRET_KEY_SESSION,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 600000 }, // En producción debería ser true para usar HTTPS
+  cookie: { maxAge: 3600000 }, // En producción debería ser true para usar HTTPS
 }));
 app.use('/', express.static(path.join(__dirname, '/public')));
 app.use('/', main_routes);
