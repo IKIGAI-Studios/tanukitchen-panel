@@ -38,7 +38,7 @@ def _process():
 
             if stove.value > stove.target+stove.TOLERANCE:
                 stove.turnOffRes()
-            if stove.value < stove.target-stove.TOLERANCE:
+            if stove.value < stove.target-stove.TOLERANCE and stove.active:
                 stove.turnOnRes()
 
             smoke.readValue()
@@ -50,7 +50,6 @@ def _process():
                 
             time.sleep(0.1)
         time.sleep(0.2)
-        GPIO.cleanup()
 
 def updateKitchenModules():
     tanukitchen.getData()

@@ -88,7 +88,7 @@ class Module:
 
         for part in parts:
             
-            if part == name:
+            if part.find(name) != -1:
                 var = part.split(':')
 
                 # Recuperar valor del módulos

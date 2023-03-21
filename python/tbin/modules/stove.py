@@ -10,26 +10,20 @@ class Stove(Module):
         super().__init__(id, serial)
     
     def readValue(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.pin, GPIO.OUT)
         if self.active:
             self.getValueFromArduino('TMP36')
         else:
-            GPIO.output(self.pin, GPIO.LOW)
+            self.turnOffRes()
             self.value = 0
 
         self.insertValue("values", self.value)
-        GPIO.cleanup()
 
     def turnOffRes(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, GPIO.HIGH)
-
-        super().turnOff()
     
     def turnOnRes(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, GPIO.LOW)
-        super().turnOn()

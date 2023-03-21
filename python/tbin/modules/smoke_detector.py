@@ -16,16 +16,3 @@ class SmokeDetector(Module):
 
         self.insertValue("values", self.value)
     
-    def turnOff(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.pin, GPIO.OUT)
-        GPIO.output(self.pin, GPIO.HIGH)
-
-        super().turnOff()
-    
-    def turnOn(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.pin, GPIO.OUT)
-        GPIO.output(self.pin, GPIO.LOW)
-        super().turnOn()
-    
