@@ -43,8 +43,10 @@ def _process():
 
             smoke.readValue()
 
-            #if extractor.active:
-            #    extractor.extract()
+            if smoke.value > 40:
+                extractor.turnOn()
+            else:
+                extractor.turnOff()
                 
             time.sleep(0.1)
         time.sleep(0.2)

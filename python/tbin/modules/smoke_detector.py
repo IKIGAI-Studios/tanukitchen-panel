@@ -10,9 +10,22 @@ class SmokeDetector(Module):
     
     def readValue(self):
         if self.active:
-            self.getValueFromArduino('MQ2')
+            self.getValueFromArduino('MQ2PER100')
         else:
             self.value = 0
 
         self.insertValue("values", self.value)
+    
+    def turnOff(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin, GPIO.OUT)
+        GPIO.output(self.pin, GPIO.HIGH)
+
+        return super().turnOff()
+    
+    def turnOn(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin, GPIO.OUT)
+        GPIO.output(self.pin, GPIO.LOW)
+        return super().turnOn()
     

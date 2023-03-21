@@ -32,4 +32,4 @@ class Stove(Module):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, GPIO.LOW)
-        return super().turnOff()
+        return super().turnOn()
