@@ -53,7 +53,7 @@ class Module:
 
     
     # Actualizar un dato del módulo
-    def updateModule(id, key, value):
+    def updateModule(self, id, key, value):
         tanukitchenDB.update(
             "modules",
             {
