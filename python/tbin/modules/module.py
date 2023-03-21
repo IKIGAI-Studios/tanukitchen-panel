@@ -81,16 +81,16 @@ class Module:
 
     # Leer valores desde arduino
     def getValueFromArduino(self, name):
-        line = self.ser.readline().decode('utf-8').rstrip()
+        line = self.serial.readline().decode('utf-8').rstrip()
 
         # Dividir la línea de datos en las partes correspondientes
         parts = line.split('|')
 
         for part in parts:
-            if part.find(name) is not -1:
+            if part.find(name) != -1:
                 var = part.split(':')
 
-                # Recuperar valor del módulo
+                # Recuperar valor del módulos
                 self.value = int(var[1])
             else:
                 print(name + ' no se reconoce')

@@ -60,7 +60,7 @@ def __init__():
 
     global scale, stove, smoke, extractor
     scale = Scale(tanukitchen.dataModules["scale"]["_id"], serial)
-    stove = Stove(tanukitchen.dataModules["stove"]["_id"], serial PIN_STOVE)
+    stove = Stove(tanukitchen.dataModules["stove"]["_id"], serial, PIN_STOVE)
     smoke = SmokeDetector(tanukitchen.dataModules["smoke_detector"]["_id"], serial)
     extractor = Extractor(tanukitchen.dataModules["extractor"]["_id"], serial, PIN_EXTRACTOR)
 

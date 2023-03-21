@@ -6,9 +6,9 @@ from .module import Module
 
 class Extractor(Module):
     
-    def __init__(self, id, pin):
+    def __init__(self, id, serial, pin):
         self.pin = pin
-        super().__init__(id)
+        super().__init__(id, serial)
     
     def extract(self):
         print("Extrayendo...")

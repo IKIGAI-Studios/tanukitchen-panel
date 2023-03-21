@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import main
 
 # Ruta de pinson: /Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json
