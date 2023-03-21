@@ -21,11 +21,11 @@ class SmokeDetector(Module):
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, GPIO.HIGH)
 
-        return super().turnOff()
+        super().turnOff()
     
     def turnOn(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, GPIO.LOW)
-        return super().turnOn()
+        super().turnOn()
     

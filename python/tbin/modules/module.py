@@ -27,11 +27,11 @@ class Module:
     
     # Encender módulo
     def turnOn(self):
-        self.updateModule(self.id, "active", True)
+        self.updateModule("active", True)
     
     # Apagar módulo
     def turnOff(self):
-        self.updateModule(self.id, "active", False)
+        self.updateModule("active", False)
     
     # Obtener datos del módulo
     def getData(self):
@@ -53,11 +53,11 @@ class Module:
 
     
     # Actualizar un dato del módulo
-    def updateModule(self, id, key, value):
+    def updateModule(self, key, value):
         tanukitchenDB.update(
             "modules",
             {
-                "_id": ObjectId(id),
+                "_id": ObjectId(self.id),
             },
             {
                 key: value

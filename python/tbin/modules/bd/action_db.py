@@ -20,9 +20,7 @@ def update(collection, filterDict, updDict):
     _getCollection(collection).update_one(
         filterDict, 
         {
-            "$set": {
-                updDict
-            }
+            "$set": updDict
         }
     )
 
