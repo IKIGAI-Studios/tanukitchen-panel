@@ -1,21 +1,21 @@
-# Get the database
+# Obtener la base de datos
 from tbin.modules.bd.get_db import get_database
 
 tanukitchenDB = get_database()
 
-# Create or get a collection
+# Crear o recuperar la colección
 def _getCollection(collection):
     return tanukitchenDB[collection] 
 
-# Insert
+# Insertar 
 def insert(collection, insDict):
     _getCollection(collection).insert_one(insDict)
 
-# Delete 
+# Eliminar 
 def delete(collection, delDict):
     _getCollection(collection).delete_one(delDict)
 
-# Update
+# Actualizar
 def update(collection, filterDict, updDict):
     _getCollection(collection).update_one(
         filterDict, 
@@ -26,7 +26,7 @@ def update(collection, filterDict, updDict):
         }
     )
 
-# Push element in array
+# Meter un elemento a un arreglo
 def push(collection, filterDict, array, elements, pos):
     _getCollection(collection).update_one(
         filterDict, 
@@ -40,12 +40,13 @@ def push(collection, filterDict, array, elements, pos):
         }
     )
 
-# Get document by id
-def getDocumentById(collection, filterDict):
+# Traer un documento por su id o flitrado
+def getDocumentByFilter(collection, filterDict):
     return _getCollection(collection).find_one(
         filterDict
     )
 
+# Traer una lista de documentos
 def getDocuments(collection, filterDict):
     list = {}
     for modulo in _getCollection(collection).find(filterDict):

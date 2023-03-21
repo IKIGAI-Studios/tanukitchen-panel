@@ -1,5 +1,4 @@
 import main
-from datetime import datetime
 
 # Ruta de pinson: /Users/erickpinzon/Documents/GitHub/tanukitchen-panel/python/modulos.json
 # Ruta de yo: C:/Users/gatit/Desktop/Tanukis/tanuki-panel/python/modulos.json

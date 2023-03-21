@@ -1,16 +1,16 @@
-import random
+import RPi.GPIO as GPIO
 import time
 
 from .module import Module
 
 class SmokeDetector(Module):
 
-    def __init__(self, id):
-        super().__init__(id)
+    def __init__(self, id, serial):
+        super().__init__(id, serial)
     
     def readValue(self):
         if self.active:
-            self.value = random.random() * 10
+            self.getValueFromArduino('MQ2')
         else:
             self.value = 0
 
