@@ -10,21 +10,26 @@ class Stove(Module):
         super().__init__(id, serial)
     
     def readValue(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin, GPIO.OUT)
         if self.active:
             self.getValueFromArduino('TMP36')
-
-            # * Lógica de la estufa
-            if self.value > self.target+self.TOLERANCE:
-                GPIO.output(self.pin, GPIO.LOW)
-            elif self.value < self.target-self.TOLERANCE:
-                GPIO.output(self.pin, GPIO.HIGH)
-
         else:
             GPIO.output(self.pin, GPIO.LOW)
             self.value = 0
 
         self.insertValue("values", self.value)
+        GPIO.cleanup()
 
+    def turnOffRes(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin, GPIO.OUT)
+        GPIO.output(self.pin, GPIO.HIGH)
 
+        return super().turnOff()
     
-    
+    def turnOnRes(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin, GPIO.OUT)
+        GPIO.output(self.pin, GPIO.LOW)
+        return super().turnOff()

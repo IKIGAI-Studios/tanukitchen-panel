@@ -35,13 +35,20 @@ def _process():
             
             scale.readValue()
             stove.readValue()
+
+            if stove.value > stove.target+stove.TOLERANCE:
+                stove.turnOffRes()
+            if stove.value < stove.target-stove.TOLERANCE:
+                stove.turnOnRes()
+
             smoke.readValue()
 
             #if extractor.active:
             #    extractor.extract()
                 
             time.sleep(0.1)
-        time.sleep(1)
+        time.sleep(0.2)
+        GPIO.cleanup()
 
 def updateKitchenModules():
     tanukitchen.getData()
@@ -51,10 +58,6 @@ def updateKitchenModules():
     extractor.getData()
 
 def __init__():
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(PIN_STOVE, GPIO.OUT)
-    GPIO.setup(PIN_EXTRACTOR, GPIO.OUT)
-
     tanukitchen.getData()
     tanukitchen.getKitchenData()
 
