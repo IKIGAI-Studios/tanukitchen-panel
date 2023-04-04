@@ -87,8 +87,10 @@ routes.get('/updateRecipesCount/:recipe', async(req, res) => {
             let recipe = req.params.recipe
             await User.updateOne(
                 { "user": usr },
-                { $push: { "count_recipes": { "name": recipe, "count": 1 } } },
-                { $set: { "last_recipe": recipe } });
+                { 
+                    $push: { "count_recipes": { "name": recipe, "count": 1 } },
+                    $set: { "last_recipe": recipe } 
+                });
             userObj = await User.find({user: usr});
             res.json(userObj)
         }

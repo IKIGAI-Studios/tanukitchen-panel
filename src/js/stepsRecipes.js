@@ -123,7 +123,7 @@ function setTempTarget(tmp) {
 
 function readyInstruction() {
     // Si se acabo la receta se redirecciona
-    if (finished) window.location.replace('/login')
+    if (finished) window.location.replace('/recipes')
     else {
         // Verificar que el numero de instruccion actual sea diferente del total de instrucciones
         if (instNum != recipe.steps[stepNum].instructions.length) {
@@ -204,8 +204,8 @@ function readDB() {
 function evaluateGoals() {
     if (!peso_correcto) {
         if (scale_goal_exist) {
-            // Verificar con un margen de error de 4 gr
-            if (scale_weight >= recipe.steps[stepNum].instructions[instNum-1].goal - 4 && scale_weight <= recipe.steps[stepNum].instructions[instNum-1].goal + 4)  {
+            // Verificar con un margen de error de 10 gr
+            if (scale_weight >= recipe.steps[stepNum].instructions[instNum-1].goal - 10 && scale_weight <= recipe.steps[stepNum].instructions[instNum-1].goal + 10)  {
                 bsAlert(`<strong>Correct</strong> weight`, 'primary')
                 peso_correcto = true;
                 $('#btn_inst_ready').attr('disabled', false);
@@ -213,8 +213,8 @@ function evaluateGoals() {
         }
     } else if (!temp_correcta) {
         if (stove_goal_exist) {
-            // Verificar con un margen de error de 4 gr
-            if (stove_temp >= recipe.steps[stepNum].instructions[instNum-1].goal - 10 && stove_temp <= recipe.steps[stepNum].instructions[instNum-1].goal + 4)  {
+            // Verificar con un margen de error de 10°
+            if (stove_temp >= recipe.steps[stepNum].instructions[instNum-1].goal - 10 && stove_temp <= recipe.steps[stepNum].instructions[instNum-1].goal + 10)  {
                 bsAlert(`<strong>Correct</strong> temperature`, 'primary')
                 temp_correcta = true;
                 $('#btn_inst_ready').attr('disabled', false);
