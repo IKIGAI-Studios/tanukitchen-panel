@@ -4,12 +4,25 @@ const { json } = require('express');
 const fs = require('fs');
 const Module = require('../models/moduleModel');
 const Recipe = require('../models/recipeModel');
-const User = require('../models/userModel')
+const User = require('../models/userModel');
+const stoveReg = require('../models/stoveRegModel');
+const scaleReg = require('../models/scaleRegModel');
+const smkDetReg = require('../models/smkDetRegModel');
 
 routes.get('/getModules/', async(req, res) => {
     try {
         if(req.session && req.session.user) {
             res.json(await Module.find({id_kitchen: req.session.user.kitchen.name}));
+        } else res.json(false)
+    } catch (e) {
+        console.error(`Error: ${e}`);
+    }
+});
+
+routes.get('/getScaleReg', async(req, res) => {
+    try {
+        if(req.session && req.session.user) {
+            res.json(await scaleReg.find({kitchen: req.session.user.kitchen.name}));
         } else res.json(false)
     } catch (e) {
         console.error(`Error: ${e}`);
