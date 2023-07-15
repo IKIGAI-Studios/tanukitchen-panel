@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const smkDetRegSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+const smkDetRegSchema = new Schema({
     timestamp: {
         type: Date,
         required: true
@@ -14,4 +14,4 @@ const smkDetRegSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('smkdetregs', smkDetRegSchema);
+export default model('smkdetregs', smkDetRegSchema);

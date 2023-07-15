@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const recipeSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+const recipeSchema = new Schema({
     recipe: {
         type: String,
         required: true
     }
 });
 
-module.exports = mongoose.model('recipes', recipeSchema);
+export default model('recipes', recipeSchema);

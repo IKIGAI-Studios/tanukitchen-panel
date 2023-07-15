@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const kitchenSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+const kitchenSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -14,4 +14,4 @@ const kitchenSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('kitchens', kitchenSchema);
+export default model('kitchens', kitchenSchema);

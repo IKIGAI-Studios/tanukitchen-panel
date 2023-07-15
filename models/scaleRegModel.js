@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const scaleRegSchema = new mongoose.Schema({
+const scaleRegSchema = new Schema({
     timestamp: {
         type: Date,
         required: true
@@ -15,4 +15,4 @@ const scaleRegSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('scaleregs', scaleRegSchema);
+export default model('scaleregs', scaleRegSchema);

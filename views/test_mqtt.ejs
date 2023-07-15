@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/img/TanukitchenLogo-White.png" />
+    <script src="socket.io/socket.io.min.js" defer></script>
+    <script src="js/test_mqtt.js" defer></script>
+    <title>MQTT</title>
+
+    <%- include('templates/header')%>
+    <div class="d-flex justify-content-center">
+      <div class="container mt-3 form-signin text-center">
+        <form action="login" method="post">
+          <div class="container my-5">
+            <h1 class="tk-ani-grad">MQTT oTAS!</h1>
+            <span class="tk-text">Show data from HiveMQ</span>
+          </div>
+
+          <div class="container" style="width: 20%">
+            <label class="form-label tk-form-label" for="input_stove"
+              >Stove</label
+            >
+            <input
+              type="text"
+              name="input_stove"
+              id="input_stove"
+              class="form-control tk-form-input"
+              readonly
+            />
+            <div class="form-check form-switch">
+              <label class="form-label tk-form-label" for="switch_stove"
+                >Status</label
+              >
+              <input
+                type="checkbox"
+                class="form-check-input justify-content-center"
+                name="switch_stove"
+                id="switch_stove"
+              />
+            </div>
+          </div>
+
+          <div class="container" style="width: 20%">
+            <label class="form-label tk-form-label" for="password">Smoke</label>
+            <input
+              type="text"
+              name="input_smoke"
+              id="input_smoke"
+              class="form-control tk-form-input"
+              readonly
+            />
+            <div class="form-check form-switch">
+              <label class="form-label tk-form-label" for="switch_smoke"
+                >Status</label
+              >
+              <input
+                type="checkbox"
+                class="form-check-input justify-content-center"
+                name="switch_smoke"
+                id="switch_smoke"
+              />
+            </div>
+          </div>
+
+          <div class="container" style="width: 20%">
+            <label class="form-label tk-form-label" for="password"
+              >Weight</label
+            >
+            <input
+              type="text"
+              name="input_weight"
+              id="input_weight"
+              class="form-control tk-form-input"
+              readonly
+            />
+            <div class="form-check form-switch">
+              <label class="form-label tk-form-label" for="switch_weight"
+                >Status</label
+              >
+              <input
+                type="checkbox"
+                class="form-check-input justify-content-center"
+                name="switch_weight"
+                id="switch_weight"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <%- include('templates/footer')%>
+  </head>
+</html>

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const moduleSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+const moduleSchema = new Schema({
     name: { type: String, required: true },
     values: [{
         date: { type: Date, required: true },
@@ -21,4 +21,4 @@ const moduleSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('modules', moduleSchema);
+export default model('modules', moduleSchema);

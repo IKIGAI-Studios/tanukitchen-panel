@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const stoveRegSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+const stoveRegSchema = new Schema({
     timestamp: {
         type: Date,
         required: true
@@ -14,4 +14,4 @@ const stoveRegSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('stoveregs', stoveRegSchema);
+export default model('stoveregs', stoveRegSchema);
