@@ -20,12 +20,12 @@
   
       <div class="container" style="width: 20%">
           <label class="form-label tk-form-label" for="user">Username</label>
-          <input type="text" name="username" id="username" class="form-control tk-form-input"/>
+          <input type="text" name="username" id="username" class="form-control tk-form-input" reqired/>
       </div>
       
       <div class="container" style="width: 20%">
-        <label class="form-label tk-form-label" for="password">Password</label>
-        <input type="password" name="password" id="password" class="form-control tk-form-input"/>
+        <label class="form-label tk-form-label" for="password" reqired>Password</label>
+        <input type="password" name="password" id="password" class="form-control tk-form-input" reqired/>
       </div>
 
       <div class="container" style="width: 20%">
@@ -41,7 +41,7 @@
 
     </form>
     <div class="container mt-5">
-        <span class="tk-text"><%= code.msj %></span>
+        <span class="tk-text"><%= code ? !code.msj ? "" : code.msj : "" %></span>
         <!--<a href="/gAuth" class="tk-link">Log in with Google</a> Tampoco hay que pasarnos por ahorita martha --> 
         <br><br><br>
         <span class="tk-text"> Don't have an account? </span>
