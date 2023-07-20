@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 import Kitchen from "../models/kichenModel.js";
 import Recipe from "../models/recipeModel.js";
 import Module from "../models/moduleModel.js";
-import { Configuration, OpenAIApi } from "openai";
+import chat_gptAPI from "./functions/chat_gptAPI.js";
 
 const routes = express.Router();
 
@@ -25,17 +25,9 @@ routes.get("/test", (req, res) => {
 
 routes.get("/chat-gpt/:msj", async (req, res) => {
 	try {
-		const configuration = new Configuration({
-			apiKey: process.env.API_KEY_CHATGPT,
-		});
-		const openai = new OpenAIApi(configuration);
-
-		const completion = await openai.createCompletion({
-			model: "text-davinci-003",
-			prompt: req.params.msj,
-			max_tokens: 3000,
-		});
-		res.json(completion.data.choices[0].text);
+        chat_gptAPI()
+		const response = await chat_gptAPI(req.params.msj);
+        res.json(response);
 	} catch (error) {
 		res.json(error);
 	}
@@ -58,10 +50,8 @@ routes.get("/userSelect/:user", async (req, res) => {
 
 routes.get("/control_panel", (req, res) => {
 	try {
-		if (req.session && req.session.user) {
-			res.locals.obj = req.session.user;
+		
 			res.render("control_panel");
-		} else res.redirect("/login");
 	} catch (e) {
 		req.session.login = { msj: `Control PanelError` };
 		res.redirect("login");

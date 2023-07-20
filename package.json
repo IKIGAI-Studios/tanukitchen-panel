@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon index",
+    "server": "nodemon index --ignore 'src/js/*.js'",
     "mqtt": "node mqtt.js"
   },
   "repository": {

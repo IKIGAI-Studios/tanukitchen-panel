@@ -1,8 +1,16 @@
-window.onload=readDB();
+import SocketsModules from "./functions/socketsModules.js";
+
+const socketModule = new SocketsModules();
+
+socketModule.listenerModule('input_temp_stove', 'stove');
+socketModule.listenerModule('input_weight', 'weight');
+socketModule.listenerModule('input_temp_scale', 'scale');
+
+//window.onload=readDB();
 var items = document.querySelectorAll('.nav-item a');
 items[0].setAttribute('aria-current', "page");
 
-jsonRead = {};
+let jsonRead = {};
 
 function readJson() {
     fetch('/api/bin/modules')
@@ -87,7 +95,7 @@ function readDB() {
 }
 
 // setInterval('readJson()', 2000);
-setInterval('readDB()', 2000);
+//setInterval('readDB()', 2000);
 
 function state_change(module, state) {
     url = '/api/bin/';
