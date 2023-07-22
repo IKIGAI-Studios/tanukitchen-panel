@@ -49,5 +49,6 @@ app.use("/", main_routes);
 app.use("/img", express.static(join(__dirname, "src/img")));
 app.use("/fonts", express.static(join(__dirname, "src/fonts")));
 app.use("/js", express.static(join(__dirname, "src/js")));
-app.set("view engine", "ejs");
+app.use("/config", express.static(join(__dirname, "./config")));
 app.use("/scss", express.static(join(__dirname, "src/assets/scss")));
+app.set("view engine", "ejs");

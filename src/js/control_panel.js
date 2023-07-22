@@ -1,123 +1,55 @@
-import SocketsModules from "./functions/socketsModules.js";
+import SocketsModules from "./class/socketsModules.js";
+import serverConfig from "../config/config.js";
+/**
+ * Objeto de Socket.IO que representa la conexión de Socket.IO.
+ * @type {SocketIOClient.Socket} socket
+ */
+const socket = io(`${serverConfig.serverUrl}:${serverConfig.serverPort}`);
 
-const socketModule = new SocketsModules();
+/**
+ * Instancia de la clase SocketsModules.
+ * @type {SocketsModules} socketModule
+ */
+const socketModule = new SocketsModules(socket);
 
-socketModule.listenerModule('input_temp_stove', 'stove');
-socketModule.listenerModule('input_weight', 'weight');
-socketModule.listenerModule('input_temp_scale', 'scale');
+/**
+ * Establece los controladores de eventos para recibir valores y acciones de MQTT para un módulo específico a través de socket.io.
+ * @param {string} inputValueId - El ID del campo de entrada para el valor del módulo.
+ * @param {string} inputActionId - El ID del campo de entrada para la acción del módulo.
+ * @param {string} module - El nombre del módulo.
+ */
+socketModule.listenerModule("label_stove_temp", "switchStove", "stove");
+socketModule.listenerModule("label_scale_weight", "switchScale", "weight");
+socketModule.listenerModule("label_fire_percent", null, "smoke");
+socketModule.listenerModule(null, "switchSmoke", "extractor");
 
-//window.onload=readDB();
-var items = document.querySelectorAll('.nav-item a');
-items[0].setAttribute('aria-current', "page");
-
-let jsonRead = {};
-
-function readJson() {
-    fetch('/api/bin/modules')
-    .then((response) => response.json())
-    .then((json) => {
-        $('#toScale').prop('checked', json.modules[0].state);
-        $('#scale_turn').html(json.modules[0].state ? 'Turn Off' : 'Turn On');
-        $('#scale_weight').html(json.modules[0].value + ' gr');
-
-        $('#toStove').prop('checked', json.modules[1].state);
-        $('#stove_turn').html(json.modules[1].state ? 'Turn Off' : 'Turn On');
-        $('#stove_temp').html(json.modules[1].value + ' C°');
-        
-        msj = 'Everything seems normal';
-        if (json.modules[2].value >= 30 && json.modules[2].value <= 60) {
-            msj = 'Warning, please open all windows';
-        } else if (json.modules[2].value >= 60) {
-            msj = 'Alert, FIRE';
-        }
-        $('#fire_percent').html(json.modules[2].value + ' %');
-        $('#fire_message').html(msj);
-        
-        $('#toSmoke').prop('checked', json.modules[3].state);
-        $('#smoke_turn').html(json.modules[3].state ? 'Turn Off' : 'Turn On');
-        $('#smoke_message').html(json.modules[3].state ? 'On' : 'Off');
-
-        $('#toGas').prop('checked', json.modules[4].state);
-        $('#gas_turn').html(json.modules[4].state ? 'Close' : 'Open');
-        $('#gas_message').html(json.modules[4].state ? 'Open' : 'Close');
-
-        $('#toOven').prop('checked', json.modules[5].state);
-        $('#oven_turn').html(json.modules[5].state ? 'Turn Off' : 'Turn On');
-        $('#oven_temp').html(json.modules[5].value + ' C°');
-    });
-}
-
-function readDB() {
-    fetch('/api/modules/getModules')
-    .then((response) => response.json())
-    .then((json) => {
-        if (!json) window.location.replace("/login");
-        json.map((module) => {
-            switch (module.name) {
-                case 'extractor': 
-                        $('#toSmoke').prop('checked', module.active);
-                        $('#smoke_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                        $('#smoke_message').html(module.active ? 'On' : 'Off');
-                    break;
-                case 'smoke_detector': 
-                        msj = 'Everything seems normal';
-                        if (module.values[0].value >= 30 && module.values[0].value <= 60) {
-                            msj = 'Warning, please open all windows';
-                        } else if (module.values[0].value >= 60) {
-                            msj = 'Alert, FIRE';
-                        }
-                        $('#fire_percent').html(module.values[0].value + ' %');
-                        $('#fire_message').html(msj);
-                    break;
-                case 'scale': 
-                        $('#toScale').prop('checked', module.active);
-                        $('#scale_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                        $('#scale_weight').html((module.active ? module.values[0].value : 0) + ' gr');
-                    break;
-                case 'stove': 
-                        $('#toStove').prop('checked', module.active);
-                        $('#stove_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                        $('#stove_temp').html(module.values[0].value + ' C°');
-                    break;
-                case 'oven': 
-                        $('#toOven').prop('checked', module.active);
-                        $('#oven_turn').html(module.active ? 'Turn Off' : 'Turn On');
-                        $('#oven_temp').html(module.values[0].value + ' C°');
-                        break;
-                case 'gas': 
-                        $('#toGas').prop('checked', module.active);
-                        $('#gas_turn').html(module.active ? 'Close' : 'Open');
-                        $('#gas_message').html(module.active ? 'Open' : 'Close');
-                    break;
-            }
-        });
-    });
-}
-
-// setInterval('readJson()', 2000);
-//setInterval('readDB()', 2000);
-
-function state_change(module, state) {
-    url = '/api/bin/';
-    state ? url += 'start' : url += 'stop';
-    url += '_' + module;
-    fetch(url)
-    .then((response) => response.json())
-        .then((json) => {
-            json ? bsAlert(`The ${module} has been turned <strong>${state ? 'on' : 'off'}</strong> successfuly`, 'primary') : bsAlert(`The ${module} <strong>couldn't</strong> be turned  ${state ? 'on' : 'off'}`, 'danger');
-        });
-}
-
-function setTempTarget() {
-    url = '/api/modules/setTempTarget/';
-    url += $('#input_temp_stove').val()
-    if (!$('#input_temp_stove').val()) bsAlert(`You must enter a <strong>valid</strong> temperature`, 'warning')
-    else {
-        fetch(url)
-        .then((response) => response.json())
-            .then((json) => {
-                json ? bsAlert(`Temperature target settled in: <strong>${$('#input_temp_stove').val()}</strong> °`, 'info') : bsAlert(`The temperature target <strong>couldn't</strong> be settled`, 'danger')
-                ;
-            });
-    }
-}
+/**
+ * Establece los controladores de eventos para enviar acciones de MQTT para un módulo específico a través de socket.io.
+ * @param {string} action - La action a emitir.
+ * @param {string} module - El nombre del módulo.
+ */
+$("#switchStove").on("change", () =>
+	socketModule.triggerModule(
+		$("#switchStove").prop("checked") ? "on" : "off",
+		"stove"
+	)
+);
+$("#switchScale").on("change", () =>
+	socketModule.triggerModule(
+		$("#switchScale").prop("checked") ? "on" : "off",
+		"weight"
+	)
+);
+$("#switchSmoke").on("change", () =>
+	socketModule.triggerModule(
+		$("#switchSmoke").prop("checked") ? "on" : "off",
+		"extractor"
+	)
+);
+/**
+ * Establece los controladores de eventos para enviar acciones de MQTT para un módulo específico a través de socket.io.
+ * @param {string} temperature - La temperatura a emitir.
+ */
+$("#btn_setTemperature").on("click", () =>
+	socketModule.setTemperatureStove($("#input_temp_stove").val())
+);

@@ -26,17 +26,17 @@
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Temperature</div>
             </div>
-                <p class="tk-panel-data" id="stove_temp">0 C°</p>
+                <p class="tk-panel-data" id="label_stove_temp">0 C°</p>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
                     <input type="number" class="form-control input-number tk-text" id="input_temp_stove" placeholder="Set the temperature" min="80" max="150"/>
-                    <button class="form-control" onclick="setTempTarget()">Set Temperature</button>
+                    <button class="form-control" id="btn_setTemperature">Set Temperature</button>
                </div>
             </div>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
-                    <input id="toStove" type="checkbox" class="form-check-input" role="switch"  onclick="state_change('stove', $('#toStove').prop('checked'))">
-                    <label for="toStove" class="tk-text" id="stove_turn">Turn On</label>
+                    <input id="switchStove" type="checkbox" class="form-check-input" role="switch">
+                    <label for="switchStove" class="tk-text" id="stove_turn">Turn On</label>
                </div>
             </div>
         </div>
@@ -50,12 +50,12 @@
                 <img src="/img/icons/tkExtractor.png" class="tk-panel-icon"></img>
             </div>
             <div class="d-flex justify-content-center mt-2">
-                <div class="tk-panel-data" id="smoke_message">Off</div>
+                <div class="tk-panel-data" id="label_smoke_message">Off</div>
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <div class="form-check form-switch">
-                    <input id="toSmoke" type="checkbox" class="form-check-input" role="switch" onclick="state_change('extractor', $('#toSmoke').prop('checked'))">
-                    <label for="toSmoke" class="tk-text" id="smoke_turn">Turn On</label>
+                    <input id="switchSmoke" type="checkbox" class="form-check-input" role="switch">
+                    <label for="switchSmoke" class="tk-text" id="smoke_turn">Turn On</label>
                </div>
             </div>
         </div>
@@ -71,11 +71,11 @@
             <div class="d-flex justify-content-center">
                 <div class="tk-panel-data">Weight</div>
             </div>
-                <p class="tk-panel-data" id="scale_weight">0 gr</p>
+                <p class="tk-panel-data" id="label_scale_weight">0 gr</p>
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
-                    <input id="toScale" type="checkbox" class="form-check-input" role="switch" onclick="state_change('scale', $('#toScale').prop('checked'))">
-                    <label for="toScale" class="tk-text" id="scale_turn">Turn On</label>
+                    <input id="switchScale" type="checkbox" class="form-check-input" role="switch">
+                    <label for="switchScale" class="tk-text" id="scale_turn">Turn On</label>
                </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
             <div class="d-flex justify-content-center mt-2">
                 <p class="tk-panel-data" id="fire_message">Everything seems normal</p>
             </div>
-                <p class="tk-panel-data" id="fire_percent">0 %</p>
+                <p class="tk-panel-data" id="label_fire_percent">0 %</p>
         </div>
 
         <!-- COLUMNA FANTASMA -->

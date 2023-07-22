@@ -8,39 +8,51 @@ import chat_gptAPI from "./functions/chat_gptAPI.js";
 const routes = express.Router();
 
 // *** RUTAS PARA USUARIOS *** GET
-
+// Ruta para renderizar el login
 routes.get("/login", (req, res) => {
+    // Renderizar login y mandar obj con el mensaje de error
 	res.render("login", { code: req.session.login });
+    // Limpiar el mensaje de error
 	req.session.login = { msj: false };
 });
 
+// Test MQTT
 routes.get("/test_mqtt", (req, res) => {
 	res.render("test_mqtt");
 });
 
+// Test
 routes.get("/test", (req, res) => {
 	res.locals.obj = req.session.user;
 	res.render("test");
 });
 
+// API Chat GPT
 routes.get("/chat-gpt/:msj", async (req, res) => {
 	try {
-        chat_gptAPI()
+        // Obtener respuesta de la API
 		const response = await chat_gptAPI(req.params.msj);
+        // Enviar respuesta como JSON
         res.json(response);
 	} catch (error) {
+        // Enviar error como JSON
 		res.json(error);
 	}
 });
 
+// Ruta para renderizar la seleccion de Usuario
 routes.get("/userSelect/:user", async (req, res) => {
 	try {
+        // Buscar el usuario y la cocina
 		let usr = await User.find({ user: req.params.user, active: true });
+        // Buscar la cocina
 		let kitchen = await Kitchen.find({
 			_id: usr[0].kitchen.id,
 			active: true,
 		});
+        // Guardar el usuario y la cocina en la sesion
 		req.session.user = { user: usr[0], kitchen: kitchen[0] };
+        // Redireccionar al control panel
 		res.redirect("/control_panel");
 	} catch (e) {
 		req.session.login = { msj: `User Selection Error` };
