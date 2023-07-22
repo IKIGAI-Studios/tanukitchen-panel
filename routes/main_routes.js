@@ -10,9 +10,9 @@ const routes = express.Router();
 // *** RUTAS PARA USUARIOS *** GET
 // Ruta para renderizar el login
 routes.get("/login", (req, res) => {
-    // Renderizar login y mandar obj con el mensaje de error
+	// Renderizar login y mandar obj con el mensaje de error
 	res.render("login", { code: req.session.login });
-    // Limpiar el mensaje de error
+	// Limpiar el mensaje de error
 	req.session.login = { msj: false };
 });
 
@@ -30,12 +30,12 @@ routes.get("/test", (req, res) => {
 // API Chat GPT
 routes.get("/chat-gpt/:msj", async (req, res) => {
 	try {
-        // Obtener respuesta de la API
+		// Obtener respuesta de la API
 		const response = await chat_gptAPI(req.params.msj);
-        // Enviar respuesta como JSON
-        res.json(response);
+		// Enviar respuesta como JSON
+		res.json(response);
 	} catch (error) {
-        // Enviar error como JSON
+		// Enviar error como JSON
 		res.json(error);
 	}
 });
@@ -43,16 +43,16 @@ routes.get("/chat-gpt/:msj", async (req, res) => {
 // Ruta para renderizar la seleccion de Usuario
 routes.get("/userSelect/:user", async (req, res) => {
 	try {
-        // Buscar el usuario y la cocina
+		// Buscar el usuario y la cocina
 		let usr = await User.find({ user: req.params.user, active: true });
-        // Buscar la cocina
+		// Buscar la cocina
 		let kitchen = await Kitchen.find({
 			_id: usr[0].kitchen.id,
 			active: true,
 		});
-        // Guardar el usuario y la cocina en la sesion
+		// Guardar el usuario y la cocina en la sesion
 		req.session.user = { user: usr[0], kitchen: kitchen[0] };
-        // Redireccionar al control panel
+		// Redireccionar al control panel
 		res.redirect("/control_panel");
 	} catch (e) {
 		req.session.login = { msj: `User Selection Error` };
@@ -62,8 +62,7 @@ routes.get("/userSelect/:user", async (req, res) => {
 
 routes.get("/control_panel", (req, res) => {
 	try {
-		
-			res.render("control_panel");
+		res.render("control_panel");
 	} catch (e) {
 		req.session.login = { msj: `Control PanelError` };
 		res.redirect("login");

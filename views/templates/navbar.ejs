@@ -29,7 +29,7 @@
 		<img
 			src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
 			width="3%"
-			onclick="chatgpt()"
+			id="btn_chatGPT"
 		/>
 		<div class="d-flex justify-content-center dropdown tk-text">
 			<a href="/profile" class="tk-link align-self-center mx-2"
@@ -54,59 +54,4 @@
 	<div id="div_alert"></div>
 </div>
 
-<script>
-	/* Primero creamos los objetos para poder grabar nuestra voz con el microfono */
-	const recVozGPT =
-		window.SpeechRecognition || window.webkitSpeechRecognition;
-	const recGPT = new recVozGPT();
-	/* metodo que se ejecuta al empezar a granar */
-	recGPT.onstart = () => {
-		console.log("Recording to send Chat GPT...");
-	};
-	/* Metodo que se ejecuta al terminar la grabación */
-	recGPT.onresult = (event) => {
-		let mensaje = event.results[0][0].transcript;
-		console.info(mensaje);
-		readCommandGPT(mensaje);
-	};
-	/* Función que condiciona la respuesta dependiendo de el contenido de la grabación */
-	const readCommandGPT = async (mensaje) => {
-		const voice = new SpeechSynthesisUtterance();
-		let rslt = "";
-		// Agregar comandos aqui
-		await fetch("/chat-gpt/" + mensaje)
-			.then((response) => response.json())
-			.then((json) => {
-				rslt = json;
-			});
-		bsAlert(
-			`You asked Chat GPT: ${mensaje}. <br>This is the answer: ${rslt}`,
-			"info"
-		);
-		voice.text = rslt;
-
-		let voices = window.speechSynthesis.getVoices();
-		let selectedVoice = voices.find(
-			(voice) => voice.name === "Google español"
-		);
-		if (selectedVoice) voice.voice = selectedVoice;
-
-		window.speechSynthesis.speak(voice);
-	};
-
-	function chatgpt() {
-		recGPT.start();
-	}
-
-	const bsAlert = (msg, type) => {
-		const wrapper = document.createElement("div");
-		wrapper.innerHTML = [
-			`<div class="alert alert-${type} tk-dark-text alert-dismissible" role="alert" id="alert_navbar">`,
-			`   <div>${msg}</div>`,
-			'   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-			"</div>",
-		].join("");
-
-		$("#div_alert").append(wrapper);
-	};
-</script>
+<script src="./js/navbar.js" type="module"></script>

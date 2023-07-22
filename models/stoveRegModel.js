@@ -1,17 +1,17 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 const stoveRegSchema = new Schema({
-    timestamp: {
-        type: Date,
-        required: true
-    },
-    kitchen: {
-        type: String,
-        required: true
-    },
-    value: {
-        type: Number,
-        required: true
-    }
+	timestamp: {
+		type: Date,
+		required: true,
+	},
+	kitchen: {
+		type: String,
+		required: true,
+	},
+	value: {
+		type: Number,
+		required: true,
+	},
 });
 
-export default model('stoveregs', stoveRegSchema);
+export default model("stoveregs", stoveRegSchema);

@@ -3,7 +3,7 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import http from "http";
-import connectMongoDB from "./connection.js";
+import connectMongoDB from "./connections/connection.js";
 import main_routes from "./routes/main_routes.js";
 // import bin_routes from './routes/bin_routes'
 // import bd_modules_routes from './routes/bd_modules_routes'
@@ -11,7 +11,8 @@ import dotenv from "dotenv";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
-import listenMQTT from "./mqtt.js";
+import listenMQTT from "./sockets/mqtt.js";
+import socketChatGPT from "./sockets/chatGPT.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,6 +25,7 @@ dotenv.config();
 
 connectMongoDB()
 listenMQTT(io);
+socketChatGPT(io);
 
 httpServer.listen(port, () => {
     console.log(`Servidor en el puerto ${port}`);

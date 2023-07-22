@@ -77,10 +77,10 @@ export default class SocketsModules {
 	 * @param {string} temperature - La temperatura a emitir.
 	 */
 	setTemperatureStove(temperature) {
-        /**
-         * Evento emitido para enviar un mensaje MQTT a través de socket.io.
-         * @event client:mqtt:stove:temperature
-         */
+		/**
+		 * Evento emitido para enviar un mensaje MQTT a través de socket.io.
+		 * @event client:mqtt:stove:temperature
+		 */
 		this.socket.emit(`client:mqtt:stove:temperature`, temperature);
 	}
 }

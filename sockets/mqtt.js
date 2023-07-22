@@ -33,15 +33,15 @@ const mqttRoutes = {
  */
 export default function listenMQTT(io) {
 	/**
-     * Objeto de configuración para la conexión MQTT.
-     * @type {Object}
-     * @property {string} host - Dirección del servidor MQTT.
-     * @property {number} port - Puerto del servidor MQTT.
-     * @property {string} protocol - Protocolo de conexión con el servidor MQTT.
-     * @property {string} username - Nombre de usuario para la conexión con el servidor MQTT.
-     * @property {string} password - Contraseña para la conexión con el servidor MQTT.
-     * @property {string} clientId - ID del cliente MQTT.
-     */
+	 * Objeto de configuración para la conexión MQTT.
+	 * @type {Object}
+	 * @property {string} host - Dirección del servidor MQTT.
+	 * @property {number} port - Puerto del servidor MQTT.
+	 * @property {string} protocol - Protocolo de conexión con el servidor MQTT.
+	 * @property {string} username - Nombre de usuario para la conexión con el servidor MQTT.
+	 * @property {string} password - Contraseña para la conexión con el servidor MQTT.
+	 * @property {string} clientId - ID del cliente MQTT.
+	 */
 	var client = connect({
 		host: process.env.MQTT_CLUSTER_URL,
 		port: process.env.MQTT_PORT,
@@ -50,11 +50,11 @@ export default function listenMQTT(io) {
 		password: process.env.MQTT_PASSWORD,
 	});
 
-    /**
-     * Callback que se ejecuta cuando se establece la conexión MQTT.
-     * @event connect
-     */
-    client.on("connect", function () {
+	/**
+	 * Callback que se ejecuta cuando se establece la conexión MQTT.
+	 * @event connect
+	 */
+	client.on("connect", function () {
 		console.log("Connected to MQTT");
 	});
 
@@ -66,12 +66,12 @@ export default function listenMQTT(io) {
 		console.log("Error MQTT.js: ", error);
 	});
 
-    /**
-     * Callback que se ejecuta cuando se establece la conexión de Socket.IO.
-     * @event connection
-     * @param {Object} socket - Objeto de Socket.IO que representa la conexión de Socket.IO.
-     */
-    io.on("connection", (socket) => {
+	/**
+	 * Callback que se ejecuta cuando se establece la conexión de Socket.IO.
+	 * @event connection
+	 * @param {Object} socket - Objeto de Socket.IO que representa la conexión de Socket.IO.
+	 */
+	io.on("connection", (socket) => {
 		/**
 		 * Callback que se ejecuta cuando se recibe un mensaje desde el servidor MQTT.
 		 * @param {string} topic - Tema del mensaje recibido.
@@ -186,10 +186,10 @@ export default function listenMQTT(io) {
 		});
 	});
 
-    /**
-     * Suscribirse a los temas MQTT.
-     * @param {string} topic - Tema MQTT al que suscribirse.
-     * @event subscribe
-     */
-    client.subscribe("client/tanukitchen/#");
+	/**
+	 * Suscribirse a los temas MQTT.
+	 * @param {string} topic - Tema MQTT al que suscribirse.
+	 * @event subscribe
+	 */
+	client.subscribe("client/tanukitchen/#");
 }

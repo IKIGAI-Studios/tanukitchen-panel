@@ -9,21 +9,20 @@ dotenv.config();
  * @returns {string} Retorna la respuesta del modelo de GPT-3
  */
 export default async function executeChatGPT(msj) {
-  try {
-    const configuration = new Configuration({
-      apiKey: process.env.API_KEY_CHATGPT,
-    });
-    const openai = new OpenAIApi(configuration);
+	try {
+		const configuration = new Configuration({
+			apiKey: process.env.API_KEY_CHATGPT,
+		});
+		const openai = new OpenAIApi(configuration);
 
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: msj,
-      max_tokens: 3000,
-    });
+		const completion = await openai.createCompletion({
+			model: "text-davinci-003",
+			prompt: msj,
+			max_tokens: 3000,
+		});
 
-    return completion.data.choices[0].text;
-  } catch (error) {
-    throw error;
-  }
+		return completion.data.choices[0].text;
+	} catch (error) {
+		throw error;
+	}
 }
-
