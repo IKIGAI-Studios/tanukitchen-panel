@@ -60,6 +60,7 @@ routes.get("/userSelect/:user", async (req, res) => {
 	}
 });
 
+// Ruta para renderizar el control panel
 routes.get("/control_panel", (req, res) => {
 	try {
 		res.render("control_panel");
@@ -69,6 +70,7 @@ routes.get("/control_panel", (req, res) => {
 	}
 });
 
+// Ruta para renderizar las recetas
 routes.get("/recipes", (req, res) => {
 	try {
 		if (req.session && req.session.user) {
@@ -81,6 +83,7 @@ routes.get("/recipes", (req, res) => {
 	}
 });
 
+// Ruta para renderizar una receta por su id
 routes.get("/recipe/:id", async (req, res) => {
 	try {
 		if (req.session && req.session.user) {
@@ -100,6 +103,7 @@ routes.get("/recipe/:id", async (req, res) => {
 	}
 });
 
+// Ruta para renderizar el perfil
 routes.get("/profile", async (req, res) => {
 	try {
 		if (req.session && req.session.user) {

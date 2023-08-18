@@ -1,13 +1,8 @@
-const routes = require("express").Router();
-const { spawn } = require("child_process");
-const { json } = require("express");
-const fs = require("fs");
-const Module = require("../models/moduleModel");
-const Recipe = require("../models/recipeModel");
-const User = require("../models/userModel");
-const stoveReg = require("../models/stoveRegModel");
-const scaleReg = require("../models/scaleRegModel");
-const smkDetReg = require("../models/smkDetRegModel");
+import { Router } from "express";
+const routes = Router();
+import Module from "../models/moduleModel.js";
+import Recipe from "../models/recipeModel.js";
+import User from "../models/userModel.js";
 
 routes.get("/getModules/", async (req, res) => {
 	try {
@@ -161,4 +156,4 @@ routes.get("/setTempTarget/:tmp", async (req, res) => {
 	}
 });
 
-module.exports = routes;
+export default routes;

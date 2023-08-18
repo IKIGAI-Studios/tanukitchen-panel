@@ -6,7 +6,7 @@ import http from "http";
 import connectMongoDB from "./connections/connection.js";
 import main_routes from "./routes/main_routes.js";
 // import bin_routes from './routes/bin_routes'
-// import bd_modules_routes from './routes/bd_modules_routes'
+import bd_modules_routes from './routes/bd_modules_routes.js'
 import dotenv from "dotenv";
 import session from "express-session";
 import cookieParser from "cookie-parser";
@@ -47,7 +47,7 @@ app.use(
 app.use("/", express.static(join(__dirname, "/public")));
 app.use("/", main_routes);
 // app.use('/api/bin/', bin_routes)
-// app.use('/api/modules/', bd_modules_routes)
+app.use('/api/modules/', bd_modules_routes);
 app.use("/img", express.static(join(__dirname, "src/img")));
 app.use("/fonts", express.static(join(__dirname, "src/fonts")));
 app.use("/js", express.static(join(__dirname, "src/js")));

@@ -21,7 +21,6 @@ export default class VoiceChatGPT {
 	constructor(socket, bsAlert) {
 		const recVozGPT =
 			window.SpeechRecognition || window.webkitSpeechRecognition;
-
 		this.socket = socket;
 		this.bsAlert = bsAlert;
 		this.recGPT = new recVozGPT();

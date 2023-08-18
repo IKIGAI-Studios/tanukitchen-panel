@@ -17,4 +17,7 @@ $("#btn_chatGPT").on('click', () => {
 	voiceChatGPT.startRecord();
 });
 
-alert('BUSCAR COMO VALIDAR QUE TENGAS CONEXION A INTERNET Y DESACTIVAR EL BOTON DE CHAT GPT')
+// Validar si tenemos conexion a internet y en caso contrario deshabilitar el boton Chat GPT
+if (!navigator.onLine) {
+    $("#btn_chatGPT").prop("disabled", true);
+}
