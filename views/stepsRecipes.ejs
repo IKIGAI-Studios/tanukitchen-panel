@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,11 +39,12 @@
                 <div class="d-flex justify-content-center">
                     <div class="tk-panel-data">Temperature</div>
                 </div>
-                <p class="tk-panel-data" id="stove_temp">0 C°</p><p class="tk-panel-data" id="stove_goal">Goal: 0 C°</p>
+                <p class="tk-panel-data" id="label_stove_temp">0 C°</p>
+                <p class="tk-panel-data" id="label_stove_temp_goal">Goal: 0 C°</p>
                 <div class="d-flex justify-content-center">
                     <div class="form-check form-switch">
-                        <input id="toStove" type="checkbox" class="form-check-input" role="switch"  onclick="state_change('stove', $('#toStove').prop('checked'))">
-                        <label for="toStove" class="tk-text" id="stove_turn">Turn On</label>
+                        <input id="switchStove" type="checkbox" class="form-check-input" role="switch">
+                        <label for="switchStove" class="tk-text" id="stove_turn">Turn On</label>
                     </div>
                 </div>
             </div>
@@ -58,12 +58,12 @@
                     <img src="/img/icons/tkExtractor.png" class="tk-panel-icon"></img>
                 </div>
                 <div class="d-flex justify-content-center mt-2">
-                    <div class="tk-panel-data" id="smoke_message">Off</div>
+                    <div class="tk-panel-data" id="label_smoke_message">Off</div>
                 </div>
                 <div class="d-flex justify-content-center mt-3">
                     <div class="form-check form-switch">
-                        <input id="toSmoke" type="checkbox" class="form-check-input" role="switch" onclick="state_change('extractor', $('#toSmoke').prop('checked'))">
-                        <label for="toSmoke" class="tk-text" id="smoke_turn">Turn On</label>
+                        <input id="switchSmoke" type="checkbox" class="form-check-input" role="switch">
+                        <label for="switchSmoke" class="tk-text" id="smoke_turn">Turn On</label>
                     </div>
                 </div>
             </div>
@@ -79,11 +79,12 @@
                 <div class="d-flex justify-content-center">
                     <div class="tk-panel-data">Weight</div>
                 </div>
-                <p class="tk-panel-data" id="scale_weight">0 gr</p><p class="tk-panel-data" id="scale_goal">Goal: 0 gr</p>
+                <p class="tk-panel-data" id="label_scale_weight">0 gr</p>
+                <p class="tk-panel-data" id="label_scale_temp_goal">Goal: 0 gr</p>
                 <div class="d-flex justify-content-center">
                     <div class="form-check form-switch">
-                        <input id="toScale" type="checkbox" class="form-check-input" role="switch" onclick="state_change('scale', $('#toScale').prop('checked'))">
-                        <label for="toScale" class="tk-text" id="scale_turn">Turn On</label>
+                        <input id="switchScale" type="checkbox" class="form-check-input" role="switch">
+                        <label for="switchScale" class="tk-text" id="scale_turn">Turn On</label>
                     </div>
                 </div>
             </div>
@@ -99,34 +100,15 @@
                 <div class="d-flex justify-content-center mt-2">
                     <p class="tk-panel-data" id="fire_message">Everything seems normal</p>
                 </div>
-                    <p class="tk-panel-data" id="fire_percent">0 %</p>
+                    <p class="tk-panel-data" id="label_fire_percent">0 %</p>
             </div>
         </div>
 
         <div class="justify-content-center row tk-text mt-3">
-            <button class="btn tk-form-btn" id="btn_inst_ready" onclick="readyInstruction()"> Instruction 1 Ready </button>
+            <button class="btn tk-form-btn" id="btn_inst_ready"> Instruction 1 Ready </button>
         </div>
 
         <img src="https://cdn-icons-png.flaticon.com/512/1231/1231089.png" width="5%" onclick="speech2text()" class="mt-5">
     </div>
-
-
-<script>
-    function init() {
-        // Obtener la receta por el id
-        fetch('/api/modules/getRecipe/<%= obj.recipe._id %>')
-        .then((response) => response.json())
-            .then((json) => { 
-                // Regresa un arreglo de recetas por eso seleccionamos el primer elemento
-                recipe = json[0];
-                readDB();
-                // Inicializar valores
-                setValues();
-                finished = false;
-                $('#recipe_name').html(recipe.name);
-                $('#total_steps').html(recipe.steps.length);
-            });
-    }
-</script>
-<script src="../js/stepsRecipes.js"></script>
+<script src="../js/stepsRecipes.js" type="module"></script>
     <%- include('templates/footer')%>

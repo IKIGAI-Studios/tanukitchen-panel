@@ -55,7 +55,7 @@ export default class VoiceChatGPT {
 
 			// Mostrar la respuesta en una alerta de Bootstrap
 			this.bsAlert(
-				`You asked Chat GPT: ${mensaje}. <br>This is the answer: ${response}`,
+				`You asked: ${mensaje}. <br>Takito answered: ${response}`,
 				"info"
 			);
 			// Establecer el texto de la voz

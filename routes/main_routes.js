@@ -86,17 +86,14 @@ routes.get("/recipes", (req, res) => {
 // Ruta para renderizar una receta por su id
 routes.get("/recipe/:id", async (req, res) => {
 	try {
-		if (req.session && req.session.user) {
-			let rslt = await Recipe.find({ _id: req.params.id });
-			let ses = req.session.user;
-			let recipe = rslt[0];
-			res.locals.obj = {
-				user: ses.user,
-				kitchen: ses.kitchen,
-				recipe: recipe,
-			};
+		// if (req.session && req.session.user) {
+			// let ses = req.session.user;
+			// res.locals.obj = {
+			// 	// user: ses.user,
+			// 	kitchen: ses.kitchen,
+			// };
 			res.render("stepsRecipes");
-		} else res.redirect("/login");
+        // } else res.redirect("/login");
 	} catch (e) {
 		req.session.login = { msj: `Recipe Error` };
 		res.redirect("login");

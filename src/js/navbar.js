@@ -5,7 +5,7 @@ import bsAlert from "./components/bsAlert.js";
  * Objeto de Socket.IO que representa la conexión de Socket.IO.
  * @type {SocketIOClient.Socket} socket
  */
-const socket = io(`${serverConfig.serverUrl}:${serverConfig.serverPort}`);
+const socket = io();
 const voiceChatGPT = new VoiceChatGPT(socket, bsAlert);
 
 /**

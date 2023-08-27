@@ -1,10 +1,10 @@
 import SocketsModules from "./class/socketsModules.js";
-import serverConfig from "../config/config.js";
+
 /**
  * Objeto de Socket.IO que representa la conexión de Socket.IO.
  * @type {SocketIOClient.Socket} socket
  */
-const socket = io(`${serverConfig.serverUrl}:${serverConfig.serverPort}`);
+const socket = io();
 
 /**
  * Instancia de la clase SocketsModules.
@@ -28,28 +28,38 @@ socketModule.listenerModule(null, "switchSmoke", "extractor");
  * @param {string} action - La action a emitir.
  * @param {string} module - El nombre del módulo.
  */
-$("#switchStove").on("change", () =>
-	socketModule.triggerModule(
-		$("#switchStove").prop("checked") ? "on" : "off",
-		"stove"
-	)
-);
-$("#switchScale").on("change", () =>
-	socketModule.triggerModule(
-		$("#switchScale").prop("checked") ? "on" : "off",
-		"weight"
-	)
-);
-$("#switchSmoke").on("change", () =>
-	socketModule.triggerModule(
-		$("#switchSmoke").prop("checked") ? "on" : "off",
-		"extractor"
-	)
-);
+document
+	.getElementById("switchStove")
+	.addEventListener("change", () =>
+		socketModule.triggerModule(
+			document.getElementById("switchStove").checked ? "on" : "off",
+			"stove"
+		)
+	);
+document
+	.getElementById("switchScale")
+	.addEventListener("change", () =>
+		socketModule.triggerModule(
+			document.getElementById("switchScale").checked ? "on" : "off",
+			"weight"
+		)
+	);
+document
+	.getElementById("switchSmoke")
+	.addEventListener("change", () =>
+		socketModule.triggerModule(
+			document.getElementById("switchSmoke").checked ? "on" : "off",
+			"extractor"
+		)
+	);
 /**
  * Establece los controladores de eventos para enviar acciones de MQTT para un módulo específico a través de socket.io.
  * @param {string} temperature - La temperatura a emitir.
  */
-$("#btn_setTemperature").on("click", () =>
-	socketModule.setTemperatureStove($("#input_temp_stove").val())
-);
+document
+	.getElementById("btn_setTemperature")
+	.addEventListener("click", () =>
+		socketModule.setTemperatureStove(
+			document.getElementById("input_temp_stove").value
+		)
+	);

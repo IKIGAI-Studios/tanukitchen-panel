@@ -24,6 +24,7 @@ const io = new Server(httpServer);
 dotenv.config();
 
 connectMongoDB()
+
 listenMQTT(io);
 socketChatGPT(io);
 

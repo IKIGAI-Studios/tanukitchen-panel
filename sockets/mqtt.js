@@ -178,11 +178,9 @@ export default function listenMQTT(io) {
 		 * @param {string} temperature - Temperatura de la estufa enviada desde el cliente.
 		 * @event client:mqtt:stove:temperature
 		 */
-		socket.on("client:mqtt:stove:temperature", (temperature) => {
-			client.publish(
-				mqttRoutes.server.STOVE + "temperature",
-				temperature
-			);
+		socket.on("client:mqtt:stove:goal", (temperature) => {
+			// client.publish(mqttRoutes.server.STOVE + "action", 'on');
+			client.publish(mqttRoutes.server.STOVE + "goal", temperature.toString());
 		});
 	});
 

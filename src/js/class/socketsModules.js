@@ -40,7 +40,9 @@ export default class SocketsModules {
 			 * @param {string} res.message - El mensaje recibido.
 			 */
 			this.socket.on(`server:mqtt:${module}:value`, ({ message }) => {
-				$(`#${inputValueId}`).text(message);
+				// $(`#${inputValueId}`).text(message);
+				// change to js vanilla
+				document.getElementById(inputValueId).innerHTML = message;
 			});
 		}
 
@@ -54,7 +56,10 @@ export default class SocketsModules {
 			 */
 			this.socket.on(`server:mqtt:${module}:action`, ({ message }) => {
 				// if message === "on" then true else false
-				$(`#${inputActionId}`).prop("checked", message === "on");
+				// $(`#${inputActionId}`).prop("checked", message === "on");
+				// change to js vanilla
+				document.getElementById(inputActionId).checked =
+					message === "on";
 			});
 		}
 	}
@@ -79,8 +84,8 @@ export default class SocketsModules {
 	setTemperatureStove(temperature) {
 		/**
 		 * Evento emitido para enviar un mensaje MQTT a través de socket.io.
-		 * @event client:mqtt:stove:temperature
+		 * @event client:mqtt:stove:goal
 		 */
-		this.socket.emit(`client:mqtt:stove:temperature`, temperature);
+		this.socket.emit(`client:mqtt:stove:goal`, temperature);
 	}
 }

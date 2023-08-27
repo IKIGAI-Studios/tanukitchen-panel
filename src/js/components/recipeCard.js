@@ -88,6 +88,7 @@ export default class RecipeCard {
 	 * @returns {void}
 	 */
 	render(idContainer) {
-		$(`#${idContainer}`).html(this.htmlTags);
+        document.getElementById(idContainer).innerHTML = this.htmlTags; 
+        // jquery old -- $(`#${idContainer}`).html(this.htmlTags);
 	}
 }
